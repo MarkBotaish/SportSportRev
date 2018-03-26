@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour {
 
     public float speed;
     public float ballSpeed;
+    public float rotateSpeed;
 
     Rigidbody2D rigid;
 
@@ -45,7 +46,8 @@ public class PlayerScript : MonoBehaviour {
 
         rigid.velocity = vel * speed;
 
-        pickup(KeyCode.E, Vector2.up);
+        pickup(KeyCode.E);
+        rotateAround(KeyCode.Q, rotateSpeed);
 
     }
 
@@ -62,12 +64,14 @@ public class PlayerScript : MonoBehaviour {
             vel += Vector2.left;
 
         rigid.velocity = vel * speed;
-        pickup(KeyCode.Keypad9, Vector2.down);
+
+        pickup(KeyCode.Keypad9);
+        rotateAround(KeyCode.Keypad7, rotateSpeed);
 
     }
 
 
-    void pickup(KeyCode key, Vector2 direction)
+    void pickup(KeyCode key)
     {
         if (Input.GetKeyDown(key) && ball != null && !hasPickedUp)
         {
@@ -77,20 +81,28 @@ public class PlayerScript : MonoBehaviour {
         }
         else if (Input.GetKeyDown(key) && hasPickedUp)
         {
+            Vector2 pos = gameObject.transform.position - ball.transform.position;
+            pos = -pos.normalized;
             hasPickedUp = false;
-            ball.GetComponent<Rigidbody2D>().velocity = direction * ballSpeed;
+            ball.GetComponent<Rigidbody2D>().velocity = pos * ballSpeed;
             ball.GetComponent<BallScript>().setPickUp(false);
             ball.GetComponent<BallScript>().setIsInAir(true);
             ball = null;
+            gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
         if (hasPickedUp)
             ball.transform.position = gameObject.transform.GetChild(0).transform.position;
     }
 
+    void rotateAround(KeyCode code, float theta) {
+        if (Input.GetKey(code))
+            gameObject.transform.eulerAngles += new Vector3(0.0f,0.0f, theta);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag == "Ball" && ball == null && !hasPickedUp && !collision.GetComponent<BallScript>().getIsInAir())
+        if (collision.transform.tag == "Ball" && ball == null && !hasPickedUp)
             ball = collision.gameObject;
     }
 

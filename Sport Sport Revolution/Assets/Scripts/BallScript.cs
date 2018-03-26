@@ -23,7 +23,7 @@ public class BallScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Wall")
+        if (collision.transform.tag == "Wall" || collision.transform.tag == "Ball")
         {
             isInAir = false;
         }
