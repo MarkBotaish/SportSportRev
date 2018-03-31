@@ -15,6 +15,6 @@ public class DisplayMultiScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 }

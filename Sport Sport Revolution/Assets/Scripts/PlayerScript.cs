@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class PlayerScript : MonoBehaviour {
 
-    public bool isPlayerOne = false;
-    public bool isPlayerTwo = false;
+    public int playerId;
+
     bool hasPickedUp = false;
 
     public float speed;
@@ -16,25 +17,75 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject ball = null;
 
+    Player player;
+
 	// Use this for initialization
 	void Start () {
         rigid = gameObject.GetComponent<Rigidbody2D>();
+        player = ReInput.players.GetPlayer(playerId);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        //Will be reworked for DDPAD
-        if (isPlayerOne)
+        devsInput();
+       checkInput();
+       checkBall();
+	}
+
+    void checkInput()
+    {
+        Vector2 vel = Vector2.zero;
+        if (player.GetButton("Left"))
+            vel += Vector2.left;
+        if (player.GetButton("Right"))
+            vel += Vector2.right;
+        if (player.GetButton("Up"))
+            vel += Vector2.up;
+        if (player.GetButton("down"))
+            vel += Vector2.down;
+
+        if (playerId == 1)
+            vel = -vel;
+        rigid.velocity = vel * speed;
+    }
+
+    void checkBall()
+    {
+        if (player.GetButton("X") && ball != null && !hasPickedUp)
+        {
+            ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            hasPickedUp = true;
+            ball.GetComponent<BallScript>().setPickUp(true);
+        }
+        else if (player.GetButton("Circle") && hasPickedUp)
+        {
+            Vector2 pos = gameObject.transform.position - ball.transform.position;
+            pos = -pos.normalized;
+            pos += rigid.velocity.normalized;
+            hasPickedUp = false;
+            ball.GetComponent<Rigidbody2D>().velocity = pos * ballSpeed;
+            ball.GetComponent<BallScript>().setPickUp(false);
+            ball.GetComponent<BallScript>().setIsInAir(true);
+            ball = null;
+            gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+
+        if (hasPickedUp)
+            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
+    }
+
+    void devsInput()
+    {
+        if (playerId == 0)
             playerOneMovement();
         else
             playerTwoMovement();
-	}
+    }
 
     void playerOneMovement()
     {
         Vector2 vel = Vector2.zero;
-
         if (Input.GetKey(KeyCode.W))
             vel += Vector2.up;
         if (Input.GetKey(KeyCode.S))
@@ -46,9 +97,7 @@ public class PlayerScript : MonoBehaviour {
 
         rigid.velocity = vel * speed;
 
-        pickup(KeyCode.E);
-        rotateAround(KeyCode.Q, rotateSpeed);
-
+        pickup(KeyCode.E, KeyCode.Q);
     }
 
     void playerTwoMovement()
@@ -65,15 +114,14 @@ public class PlayerScript : MonoBehaviour {
 
         rigid.velocity = vel * speed;
 
-        pickup(KeyCode.Keypad9);
-        rotateAround(KeyCode.Keypad7, rotateSpeed);
+        pickup(KeyCode.Keypad9, KeyCode.Keypad7);
 
     }
 
 
-    void pickup(KeyCode key)
+    void pickup(KeyCode key, KeyCode key2)
     {
-        if (Input.GetKeyDown(key) && ball != null && !hasPickedUp)
+        if (Input.GetKeyDown(key2) && ball != null && !hasPickedUp)
         {
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             hasPickedUp = true;
@@ -83,6 +131,7 @@ public class PlayerScript : MonoBehaviour {
         {
             Vector2 pos = gameObject.transform.position - ball.transform.position;
             pos = -pos.normalized;
+            pos += rigid.velocity.normalized ;
             hasPickedUp = false;
             ball.GetComponent<Rigidbody2D>().velocity = pos * ballSpeed;
             ball.GetComponent<BallScript>().setPickUp(false);
@@ -93,11 +142,6 @@ public class PlayerScript : MonoBehaviour {
 
         if (hasPickedUp)
             ball.transform.position = gameObject.transform.GetChild(0).transform.position;
-    }
-
-    void rotateAround(KeyCode code, float theta) {
-        if (Input.GetKey(code))
-            gameObject.transform.eulerAngles += new Vector3(0.0f,0.0f, theta);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

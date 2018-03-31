@@ -17,7 +17,14 @@ public class BallScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (rigid.velocity != Vector2.zero && rigid.velocity.magnitude < 0.4)
+        {
             rigid.velocity = Vector2.zero;
+        }
+            
+        if(isInAir)
+            gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        else
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
     }
 
