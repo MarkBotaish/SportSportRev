@@ -4,40 +4,32 @@ using UnityEngine;
 
 public class BallScript : MonoBehaviour {
 
-    bool hasBeenPickedUp = false;
-    bool isInAir = false;
-    Rigidbody2D rigid;
+    public float ballThrownSpeed;
+    public Color startingColor; 
 
-	// Use this for initialization
-	void Start () {
-        rigid = gameObject.GetComponent<Rigidbody2D>();
+    protected bool hasBeenPickedUp = false;
+    protected bool isInAir = false;
+    protected Rigidbody2D rigid;
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
+    virtual protected void Start(){ rigid = gameObject.GetComponent<Rigidbody2D>();}
+
+    virtual public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
+    virtual public void setIsInAir(bool tof) { isInAir = tof; }
+    virtual public bool getIsInAir() { return isInAir; }
+    virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
+
+    virtual protected void checkThrownBall()
+    {
         if (rigid.velocity != Vector2.zero && rigid.velocity.magnitude < 0.4)
         {
             rigid.velocity = Vector2.zero;
         }
-            
-        if(isInAir)
+
+        if (isInAir)
             gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         else
-            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
+            gameObject.GetComponent<SpriteRenderer>().color = startingColor;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.tag == "Wall" || collision.transform.tag == "Ball")
-        {
-            isInAir = false;
-        }
-           
-    }
-
-    public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
-    public void setIsInAir(bool tof) { isInAir = tof; }
-    public bool getIsInAir() { return isInAir; }
+    virtual public void reset() { }
 }
