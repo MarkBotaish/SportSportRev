@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rewired;
-
 public class PlayerScript : MonoBehaviour {
 
     public int playerId;
@@ -17,76 +15,19 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject ball = null;
 
-    Player player;
-
 	// Use this for initialization
 	void Start () {
         rigid = gameObject.GetComponent<Rigidbody2D>();
-        player = ReInput.players.GetPlayer(playerId);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        devsInput();
-       checkInput();
-       checkBall();
-	}
-
-    void checkInput()
-    {
-        Vector2 vel = Vector2.up * pullSpeed;
-        if (player.GetButton("Left"))
-            vel += Vector2.left;
-        if (player.GetButton("Right"))
-            vel += Vector2.right;
-        if (player.GetButton("Up"))
-            vel += Vector2.up;
-        if (player.GetButton("down"))
-            vel += Vector2.down;
-
-		if (playerId == 1) 
-			vel = -vel;
-        rigid.velocity = vel * speed;
-    }
-
-    void checkBall()
-    {
-		if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead)
-        {
-            ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            hasPickedUp = true;
-            ball.GetComponent<BallScript>().setPickUp(true);
-        }
-		else if ((player.GetButton("Circle") || player.GetButton("X")) && hasPickedUp)
-        {
-            Vector2 pos = gameObject.transform.position - ball.transform.position;
-            pos = -pos.normalized;
-            pos = rigid.velocity.normalized;
-			if (playerId == 0)
-				pos.y = 1.0f;
-			else
-				pos.y = -1.0f;
-            hasPickedUp = false;
-            ball.GetComponent<BallScript>().throwBall(pos);
-            ball.GetComponent<BallScript>().setPickUp(false);
-            ball.GetComponent<BallScript>().setIsInAir(true);
-            ball = null;
-            gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-        }
-
-        if (hasPickedUp)
-            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
-    }
-
-    void devsInput()
-    {
         if (playerId == 0)
             playerOneMovement();
         else
             playerTwoMovement();
     }
-
     void playerOneMovement()
     {
 		Vector2 vel = Vector2.up * pullSpeed;
@@ -98,10 +39,18 @@ public class PlayerScript : MonoBehaviour {
             vel += Vector2.left;
         if (Input.GetKey(KeyCode.D))
             vel += Vector2.right;
+        if (Input.GetKey(KeyCode.Q))
+            vel += (Vector2.left + Vector2.up).normalized;
+        if (Input.GetKey(KeyCode.E))
+            vel += (Vector2.right + Vector2.up).normalized;
+        if (Input.GetKey(KeyCode.LeftShift))
+            vel += (Vector2.left + Vector2.down).normalized;
+        if (Input.GetKey(KeyCode.C))
+            vel += (Vector2.right + Vector2.down).normalized;
 
         rigid.velocity = vel * speed;
 
-        pickup(KeyCode.E, KeyCode.Q,1.0f);
+        pickup(KeyCode.R,1.0f);
     }
 
     void playerTwoMovement()
@@ -115,15 +64,23 @@ public class PlayerScript : MonoBehaviour {
             vel += Vector2.right;
         if (Input.GetKey(KeyCode.Keypad6))
             vel += Vector2.left;
+        if (Input.GetKey(KeyCode.Keypad7))
+            vel += (Vector2.right + Vector2.down).normalized;
+        if (Input.GetKey(KeyCode.Keypad9))
+            vel += (Vector2.left + Vector2.down).normalized;
+        if (Input.GetKey(KeyCode.Keypad1))
+            vel += (Vector2.right + Vector2.up).normalized;
+        if (Input.GetKey(KeyCode.Keypad3))
+            vel += (Vector2.left + Vector2.up).normalized;
 
         rigid.velocity = vel * speed;
 
-        pickup(KeyCode.Keypad9, KeyCode.Keypad7, -1.0f);
+        pickup(KeyCode.KeypadPlus, -1.0f);
 
     }
 
 
-	void pickup(KeyCode key, KeyCode key2, float y)
+	void pickup(KeyCode key, float y)
     {
 		if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead)
         {
@@ -132,7 +89,7 @@ public class PlayerScript : MonoBehaviour {
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
         }
-		else if ((Input.GetKeyDown(key) || Input.GetKeyDown(key2))&& hasPickedUp)
+		else if ((Input.GetKeyDown(key))&& hasPickedUp)
         {
 			Vector2 pos = gameObject.transform.position - ball.transform.position;
 			pos = -pos.normalized;
@@ -142,17 +99,19 @@ public class PlayerScript : MonoBehaviour {
             ball.GetComponent<BallScript>().throwBall(pos);
             ball.GetComponent<BallScript>().setPickUp(false);
             ball.GetComponent<BallScript>().setIsInAir(true);
+            ball.GetComponent<BallScript>().setThrownPlayer(gameObject);
             ball = null;
             gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+            print("why");
         }
-
-        if (hasPickedUp)
-            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
-
 
         //Might need to change
         if (ball == null)
             hasPickedUp = false;
+
+        if (hasPickedUp)
+            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
+      
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -168,11 +127,16 @@ public class PlayerScript : MonoBehaviour {
 			ball = null;
 		}
 
+        if (collision.transform.tag == "Ball" && ball == collision.gameObject)
+        {
+            ball = null;
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir())
+        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir() && collision.gameObject.GetComponent<BallScript>().getThrownPlayer() != gameObject)
         {
 			isDead = true;
             print("DEAD");
