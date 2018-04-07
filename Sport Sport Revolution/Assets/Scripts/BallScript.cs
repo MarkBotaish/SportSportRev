@@ -18,7 +18,6 @@ public class BallScript : MonoBehaviour {
 
     public virtual void Update()
     {
-        print("shit");
         checkThrownBall();
         if (Mathf.Abs(transform.position.y) < 0.5 && !isInAir && !hasBeenPickedUp)
             respawn();

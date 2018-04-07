@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4105183719729354
 Transform:
   m_ObjectHideFlags: 1
@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballThrownSpeed: 10
+  fallSpeed: 2
   startingColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!212 &212394714712355504
 SpriteRenderer:

@@ -1,0 +1,39 @@
+2018/04/07 13:28:13.299 Info   Starting JoyToKey Ver5.9
+2018/04/07 13:28:13.299 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
+2018/04/07 13:28:13.299 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
+2018/04/07 13:28:13.299 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
+2018/04/07 13:28:13.299 Info   Windows Version = 6.2
+2018/04/07 13:28:13.301 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
+2018/04/07 13:28:13.308 Info   LicenseKey "" is not valid
+2018/04/07 13:28:13.358 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/04/07 13:28:13.359 Info   Initialized XInput (Joystick.cpp#146)
+2018/04/07 13:28:13.415 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/07 13:28:13.415 Info   Preferred index = 0
+2018/04/07 13:28:13.416 Info   numAxis = 6
+2018/04/07 13:28:13.416 Info   numPOVs = 1
+2018/04/07 13:28:13.416 Info   numButtons = 13
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=0 type=102 name=Y Axis
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=4 type=2 name=X Axis
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=8 type=502 name=Z Rotation
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=12 type=402 name=Y Rotation
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=16 type=302 name=X Rotation
+2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=20 type=202 name=Z Axis
+2018/04/07 13:28:13.417 Info   Detected a DI joystick: {C2434C80-39BE-11E8-8003-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/07 13:28:13.417 Info   Preferred index = 1
+2018/04/07 13:28:13.417 Info   numAxis = 6
+2018/04/07 13:28:13.417 Info   numPOVs = 1
+2018/04/07 13:28:13.417 Info   numButtons = 13
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=0 type=102 name=Y Axis
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=4 type=2 name=X Axis
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=8 type=502 name=Z Rotation
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=12 type=402 name=Y Rotation
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=16 type=302 name=X Rotation
+2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=20 type=202 name=Z Axis
+2018/04/07 13:28:13.418 Info   DetectJoysticks: Detected 2 DI joystick(s)
+2018/04/07 13:28:13.420 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/07 13:28:13.420 Info   Joystick #2: Nintendo RVL-CNT-01
+2018/04/07 13:28:13.420 Info   2 joysticks are detected (Joystick.cpp#168)
+2018/04/07 13:28:13.420 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/04/07 13:28:13.422 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/04/07 13:28:13.430 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/04/07 13:28:19.290 Info   Application terminated (Utils\LogFile.cpp#20)
