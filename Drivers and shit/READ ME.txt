@@ -1,0 +1,10 @@
+Need to install TouchMote: http://touchmote.net/
+Make sure its the 64-bit system (middle)
+
+Controller one:
+A -> R
+B -> F
+
+Controller Two 
+A -> +
+B -> -
