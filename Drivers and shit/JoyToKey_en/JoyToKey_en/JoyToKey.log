@@ -1,39 +1,179 @@
-2018/04/07 13:28:13.299 Info   Starting JoyToKey Ver5.9
-2018/04/07 13:28:13.299 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
-2018/04/07 13:28:13.299 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
-2018/04/07 13:28:13.299 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
-2018/04/07 13:28:13.299 Info   Windows Version = 6.2
-2018/04/07 13:28:13.301 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
-2018/04/07 13:28:13.308 Info   LicenseKey "" is not valid
-2018/04/07 13:28:13.358 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/04/07 13:28:13.359 Info   Initialized XInput (Joystick.cpp#146)
-2018/04/07 13:28:13.415 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
-2018/04/07 13:28:13.415 Info   Preferred index = 0
-2018/04/07 13:28:13.416 Info   numAxis = 6
-2018/04/07 13:28:13.416 Info   numPOVs = 1
-2018/04/07 13:28:13.416 Info   numButtons = 13
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=0 type=102 name=Y Axis
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=4 type=2 name=X Axis
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=8 type=502 name=Z Rotation
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=12 type=402 name=Y Rotation
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=16 type=302 name=X Rotation
-2018/04/07 13:28:13.416 Info   EnumDeviceObject: Axis offset=20 type=202 name=Z Axis
-2018/04/07 13:28:13.417 Info   Detected a DI joystick: {C2434C80-39BE-11E8-8003-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
-2018/04/07 13:28:13.417 Info   Preferred index = 1
-2018/04/07 13:28:13.417 Info   numAxis = 6
-2018/04/07 13:28:13.417 Info   numPOVs = 1
-2018/04/07 13:28:13.417 Info   numButtons = 13
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=0 type=102 name=Y Axis
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=4 type=2 name=X Axis
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=8 type=502 name=Z Rotation
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=12 type=402 name=Y Rotation
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=16 type=302 name=X Rotation
-2018/04/07 13:28:13.417 Info   EnumDeviceObject: Axis offset=20 type=202 name=Z Axis
-2018/04/07 13:28:13.418 Info   DetectJoysticks: Detected 2 DI joystick(s)
-2018/04/07 13:28:13.420 Info   Joystick #1: Nintendo RVL-CNT-01
-2018/04/07 13:28:13.420 Info   Joystick #2: Nintendo RVL-CNT-01
-2018/04/07 13:28:13.420 Info   2 joysticks are detected (Joystick.cpp#168)
-2018/04/07 13:28:13.420 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
-2018/04/07 13:28:13.422 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
-2018/04/07 13:28:13.430 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
-2018/04/07 13:28:19.290 Info   Application terminated (Utils\LogFile.cpp#20)
+2018/04/08 19:35:29.167 Info   Starting JoyToKey Ver5.9
+2018/04/08 19:35:29.167 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
+2018/04/08 19:35:29.167 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
+2018/04/08 19:35:29.167 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
+2018/04/08 19:35:29.167 Info   Windows Version = 6.2
+2018/04/08 19:35:29.169 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
+2018/04/08 19:35:29.187 Info   LicenseKey "" is not valid
+2018/04/08 19:35:29.325 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/04/08 19:35:29.326 Info   Initialized XInput (Joystick.cpp#146)
+2018/04/08 19:35:29.339 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:35:29.339 Info   Preferred index = -1
+2018/04/08 19:35:29.339 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:35:30.448 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:35:30.448 Info   It is an XInput device, so skipping...
+2018/04/08 19:35:30.449 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:35:30.449 Info   Preferred index = 0
+2018/04/08 19:35:30.449 Info   numAxis = 0
+2018/04/08 19:35:30.449 Info   numPOVs = 0
+2018/04/08 19:35:30.449 Info   numButtons = 0
+2018/04/08 19:35:30.449 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:35:30.452 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:35:30.452 Info   Joystick #2: XInput Device #1
+2018/04/08 19:35:30.452 Info   2 joysticks are detected (Joystick.cpp#168)
+2018/04/08 19:35:30.495 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/04/08 19:35:30.509 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/04/08 19:35:30.556 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/04/08 19:35:35.906 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:35:35.906 Info   Preferred index = -1
+2018/04/08 19:35:35.906 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:35:36.091 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:35:36.091 Info   It is an XInput device, so skipping...
+2018/04/08 19:35:36.092 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:35:36.092 Info   Preferred index = 0
+2018/04/08 19:35:36.092 Info   numAxis = 0
+2018/04/08 19:35:36.092 Info   numPOVs = 0
+2018/04/08 19:35:36.092 Info   numButtons = 0
+2018/04/08 19:35:36.092 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:35:36.094 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:35:36.095 Info   Joystick #2: XInput Device #1
+2018/04/08 19:35:40.749 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:35:49.837 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:36:22.381 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:36:32.333 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:36:52.429 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:36:55.501 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:37:08.237 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:37:16.253 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:37:20.169 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:37:20.169 Info   Preferred index = 0
+2018/04/08 19:37:20.170 Info   numAxis = 0
+2018/04/08 19:37:20.170 Info   numPOVs = 0
+2018/04/08 19:37:20.170 Info   numButtons = 0
+2018/04/08 19:37:20.170 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:37:20.172 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:37:32.749 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:37:52.205 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:37:56.589 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:38:44.605 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/08 19:38:54.305 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:38:54.305 Info   Preferred index = -1
+2018/04/08 19:38:54.305 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:38:54.534 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:38:54.534 Info   It is an XInput device, so skipping...
+2018/04/08 19:38:54.535 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:38:54.535 Info   Preferred index = 0
+2018/04/08 19:38:54.535 Info   numAxis = 0
+2018/04/08 19:38:54.535 Info   numPOVs = 0
+2018/04/08 19:38:54.535 Info   numButtons = 0
+2018/04/08 19:38:54.535 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:38:54.537 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:38:54.537 Info   Joystick #2: XInput Device #1
+2018/04/08 19:38:59.341 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:38:59.341 Info   Preferred index = -1
+2018/04/08 19:38:59.341 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:38:59.528 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:38:59.528 Info   It is an XInput device, so skipping...
+2018/04/08 19:38:59.529 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:38:59.529 Info   Preferred index = 0
+2018/04/08 19:38:59.529 Info   numAxis = 0
+2018/04/08 19:38:59.529 Info   numPOVs = 0
+2018/04/08 19:38:59.529 Info   numButtons = 0
+2018/04/08 19:38:59.529 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:38:59.532 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:38:59.532 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:01.653 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:39:01.653 Info   Preferred index = -1
+2018/04/08 19:39:01.653 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:39:01.840 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:39:01.840 Info   It is an XInput device, so skipping...
+2018/04/08 19:39:01.841 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:39:01.841 Info   Preferred index = 0
+2018/04/08 19:39:01.841 Info   numAxis = 0
+2018/04/08 19:39:01.841 Info   numPOVs = 0
+2018/04/08 19:39:01.841 Info   numButtons = 0
+2018/04/08 19:39:01.841 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:39:01.843 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:39:01.844 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:01.845 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:39:01.845 Info   Preferred index = -1
+2018/04/08 19:39:01.845 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:39:02.032 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:39:02.032 Info   It is an XInput device, so skipping...
+2018/04/08 19:39:02.032 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:39:02.032 Info   Preferred index = 0
+2018/04/08 19:39:02.033 Info   numAxis = 0
+2018/04/08 19:39:02.033 Info   numPOVs = 0
+2018/04/08 19:39:02.033 Info   numButtons = 0
+2018/04/08 19:39:02.033 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:39:02.035 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:39:02.035 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:04.336 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:39:04.336 Info   Preferred index = -1
+2018/04/08 19:39:04.336 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:39:04.523 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:39:04.523 Info   It is an XInput device, so skipping...
+2018/04/08 19:39:04.523 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:39:04.523 Info   Preferred index = 0
+2018/04/08 19:39:04.523 Info   numAxis = 0
+2018/04/08 19:39:04.523 Info   numPOVs = 0
+2018/04/08 19:39:04.523 Info   numButtons = 0
+2018/04/08 19:39:04.524 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:39:04.526 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:39:04.526 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:04.527 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:39:04.527 Info   Preferred index = -1
+2018/04/08 19:39:04.527 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:39:04.712 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:39:04.712 Info   It is an XInput device, so skipping...
+2018/04/08 19:39:04.713 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:39:04.713 Info   Preferred index = 0
+2018/04/08 19:39:04.713 Info   numAxis = 0
+2018/04/08 19:39:04.713 Info   numPOVs = 0
+2018/04/08 19:39:04.713 Info   numButtons = 0
+2018/04/08 19:39:04.713 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:39:04.715 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:39:04.715 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:04.717 Info   Detected a XI joystick: XInput-0
+2018/04/08 19:39:04.717 Info   Preferred index = -1
+2018/04/08 19:39:04.717 Info   DetectJoysticks: Detected 1 XI joystick(s)
+2018/04/08 19:39:04.903 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+2018/04/08 19:39:04.904 Info   It is an XInput device, so skipping...
+2018/04/08 19:39:04.904 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+2018/04/08 19:39:04.904 Info   Preferred index = 0
+2018/04/08 19:39:04.904 Info   numAxis = 0
+2018/04/08 19:39:04.904 Info   numPOVs = 0
+2018/04/08 19:39:04.904 Info   numButtons = 0
+2018/04/08 19:39:04.904 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/04/08 19:39:04.906 Info   Joystick #1: Nintendo RVL-CNT-01
+2018/04/08 19:39:04.907 Info   Joystick #2: XInput Device #1
+2018/04/08 19:39:05.597 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+4/8/2018 7:39:20 PM Error  Access is denied.
+ (Utils\Utils.cpp#473)
+4/8/2018 7:39:27 PM Info   Detected a XI joystick: XInput-0
+4/8/2018 7:39:27 PM Info   Preferred index = -1
+4/8/2018 7:39:27 PM Info   DetectJoysticks: Detected 1 XI joystick(s)
+4/8/2018 7:39:28 PM Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
+4/8/2018 7:39:28 PM Info   It is an XInput device, so skipping...
+4/8/2018 7:39:28 PM Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
+4/8/2018 7:39:28 PM Info   Preferred index = 0
+4/8/2018 7:39:28 PM Info   numAxis = 0
+4/8/2018 7:39:28 PM Info   numPOVs = 0
+4/8/2018 7:39:28 PM Info   numButtons = 0
+4/8/2018 7:39:28 PM Info   DetectJoysticks: Detected 1 DI joystick(s)
+4/8/2018 7:39:28 PM Info   Joystick #1: Nintendo RVL-CNT-01
+4/8/2018 7:39:28 PM Info   Joystick #2: XInput Device #1
+4/8/2018 7:39:33 PM Info   Application terminated (Utils\LogFile.cpp#20)

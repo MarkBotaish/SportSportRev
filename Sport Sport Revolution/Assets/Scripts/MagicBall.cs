@@ -17,10 +17,14 @@ public class MagicBall : BallScript {
         transform.localScale *=  4.0f / Random.Range(1, 8);
     }
 
-    override public void reset()
+    override public void restart()
     {
-        rigid.velocity = Vector2.zero;
-        transform.localScale = originalScale;
+        base.restart();
+        if (isInitted)
+        {
+            rigid.velocity = Vector2.zero;
+            transform.localScale = originalScale;
+        }
     }
 
 }

@@ -11,8 +11,12 @@ public class GameManagerScript : MonoBehaviour {
     public Text roundTextP2;
     public Text playerOneText;
     public Text playerTwoText;
+    public Text playerOneRound;
+    public Text playerTwoRound;
     public PlayerScript playerOne;
     public PlayerScript playerTwo;
+
+    public List<StopableObject> objects;
 
     int round = 0;
     int roundsWonForOne = 0;
@@ -22,6 +26,8 @@ public class GameManagerScript : MonoBehaviour {
     void Start () {
         code = this;
         updateRound();
+        playerOne.setManager(this);
+        playerTwo.setManager(this);
 	}
 	
 	// Update is called once per frame
@@ -49,9 +55,23 @@ public class GameManagerScript : MonoBehaviour {
         roundTextP1.text = "Round #: " + round;
         roundTextP2.text = "Round #: " + round;
 
-        if (round <= 1)
-            return;
-        playerOne.resetPlayer();
-        playerTwo.resetPlayer();
+        for (int i = 0; i < objects.Count; i++)
+            objects[i].restart();
+
+        StartCoroutine(roundStart());
+    }
+
+    IEnumerator roundStart()
+    {
+        playerOneRound.text = "Round " + round;
+        playerTwoRound.text = "Round " + round;
+
+        playerOneRound.gameObject.SetActive(true);
+        playerTwoRound.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        for (int i = 0; i < objects.Count; i++)
+            objects[i].unfreeze();
+        playerOneRound.gameObject.SetActive(false);
+        playerTwoRound.gameObject.SetActive(false);
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : StopableObject {
 
     public int playerId;
 
     bool hasPickedUp = false;
     bool isDead = false;
-    bool isFrozen = false;
+    bool isStunned = false;
+    bool isInitted = false;
 
     public float speed;
     public float pullSpeed;
@@ -18,17 +19,27 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject ball = null;
 
+    public Color tint;
+    private Color startingColor;
+
     private Vector3 startingPos;
+
+    public void setManager(GameManagerScript manage) { code = manage; }
 
     // Use this for initialization
     void Start() {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         startingPos = gameObject.transform.position;
-        code = GameManagerScript.code;
+        startingColor = gameObject.GetComponent<SpriteRenderer>().color;
+        isInitted = true;
+
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (isForzen)
+            return;
 
         if (playerId == 0 && !isDead)
             playerOneMovement();
@@ -94,6 +105,9 @@ public class PlayerScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.Keypad3))
             vel += (Vector2.left + Vector2.up).normalized;
 
+        if (Input.GetKey(KeyCode.KeypadMinus))
+            print("asdghuop");
+
         rigid.velocity = vel * speed;
 
         pickup(KeyCode.KeypadPlus, -1.0f);
@@ -105,7 +119,7 @@ public class PlayerScript : MonoBehaviour {
     {
         if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead)
         {
-            ball.GetComponent<BallScript>().reset();
+            ball.GetComponent<BallScript>().playerRestart();
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
@@ -113,14 +127,19 @@ public class PlayerScript : MonoBehaviour {
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
             Vector2 pos = gameObject.transform.position - ball.transform.position;
+            BallScript ballScript = ball.GetComponent<BallScript>();
             pos = -pos.normalized;
             pos = rigid.velocity.normalized;
             pos.y = y;
             hasPickedUp = false;
-            ball.GetComponent<BallScript>().throwBall(pos);
-            ball.GetComponent<BallScript>().setPickUp(false);
-            ball.GetComponent<BallScript>().setIsInAir(true);
-            ball.GetComponent<BallScript>().setThrownPlayer(gameObject);
+
+            if (ballScript.type == BallType.Laser)
+                pos.x = 0;
+
+            ballScript.throwBall(pos);
+            ballScript.setPickUp(false);
+            ballScript.setIsInAir(true);
+            ballScript.setThrownPlayer(this);
             ball = null;
             gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         }
@@ -152,33 +171,55 @@ public class PlayerScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir() && collision.gameObject.GetComponent<BallScript>().getThrownPlayer() != gameObject)
+        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir() && collision.gameObject.GetComponent<BallScript>().getThrownPlayer() != this)
         {
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-			isDead = true;
-            //print("DEAD");
-            collision.gameObject.GetComponent<BallScript>().setIsInAir(false);
-            StartCoroutine( freeze());
+            hit(collision.gameObject);
         }
+    }
+
+    public void hit(GameObject col)
+    {
+        col.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        isDead = true;
+        gameObject.GetComponent<SpriteRenderer>().color = tint;
+        print("DEAD");
+        col.GetComponent<BallScript>().setIsInAir(false);
+        StartCoroutine(freeze());
     }
 
 
     IEnumerator freeze()
     {
-        if(playerId == 0)
-            rigid.velocity = Vector2.up * pullSpeed;
-        else
-            rigid.velocity = Vector2.down * pullSpeed;
+        if (!isStunned)
+        {
+            if (playerId == 0)
+                rigid.velocity = Vector2.up * pullSpeed;
+            else
+                rigid.velocity = Vector2.down * pullSpeed;
 
-        isFrozen = true;
-        yield return new WaitForSeconds(freezeTime);
-        isFrozen = false;
-        isDead = false;
+            isStunned = true;
+            yield return new WaitForSeconds(freezeTime);
+            isStunned = false;
+            isDead = false;
+            gameObject.GetComponent<SpriteRenderer>().color = startingColor;
+        }
     }
 
-    public void resetPlayer()
+    public override void restart()
     {
-        rigid.velocity = Vector3.zero;
-        gameObject.transform.position = startingPos;
+        base.restart();
+        if (isInitted)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = startingColor;
+            rigid.velocity = Vector3.zero;
+            gameObject.transform.position = startingPos;
+        }
+    }
+
+    public bool getAction()
+    {
+        if ((playerId == 0 && Input.GetKey(KeyCode.F)) || (playerId == 1 && Input.GetKey(KeyCode.KeypadMinus)))
+            return true;
+        return false;
     }
 }

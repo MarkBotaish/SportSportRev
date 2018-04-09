@@ -2,22 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallScript : MonoBehaviour {
+public enum BallType
+{
+    Base, Laser, Magic, Explosive
+}
+
+
+public class BallScript : StopableObject {
 
     public float ballThrownSpeed;
     public float fallSpeed;
-    public Color startingColor;
+    Color startingColor;
+    public BallType type;
+    protected bool isInitted = false;
 
-    protected GameObject thrownPlayer;
+
+    protected PlayerScript thrownPlayer;
 
     protected bool hasBeenPickedUp = false;
     protected bool isInAir = false;
     protected Rigidbody2D rigid;
+    public int bounceCount;
+    protected int startingBounceCount;
 
-    virtual protected void Start() { rigid = gameObject.GetComponent<Rigidbody2D>(); }
+    virtual public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
+    virtual public bool getPickUp() { return hasBeenPickedUp; }
+    virtual public void setIsInAir(bool tof) { isInAir = tof; }
+    virtual public bool getIsInAir() { return isInAir; }
+    virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
+    virtual protected void doAction() { thrownPlayer = null; }
+    public void setThrownPlayer(PlayerScript obj) { thrownPlayer = obj; }
+    public PlayerScript getThrownPlayer() { return thrownPlayer; }
+
+    virtual protected void Start() {
+        startingBounceCount = bounceCount;
+        rigid = gameObject.GetComponent<Rigidbody2D>();
+        startingColor = gameObject.GetComponent<SpriteRenderer>().color;
+        isInitted = true;
+    }
 
     public virtual void Update()
     {
+        if (isForzen)
+            return;
+
         checkThrownBall();
         if (Mathf.Abs(transform.position.y) < 0.5 && !isInAir && !hasBeenPickedUp)
             respawn();
@@ -30,29 +58,32 @@ public class BallScript : MonoBehaviour {
                 rigid.velocity = new Vector2(rigid.velocity.x, fallSpeed);
         }
 
+        if (thrownPlayer != null && thrownPlayer.getAction())
+            doAction();
+
+
+
     }
 
     protected void respawn()
     {
         int rand = Random.Range(0, 2);
-        if(rand == 0)
+        if (rigid != null)
+            rigid.velocity = Vector2.zero;
+
+        if (rand == 0)
         {
             transform.position = new Vector3(transform.position.x, 8.0f, 0);
-            rigid.velocity = Vector3.down * fallSpeed;
         }
         else
         {
             transform.position = new Vector3(transform.position.x, -8.0f, 0);
-            rigid.velocity = Vector3.up * fallSpeed;
         }
+
+        bounceCount = startingBounceCount;
     }
 
-    virtual public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
-    virtual public void setIsInAir(bool tof) { isInAir = tof; }
-    virtual public bool getIsInAir() { return isInAir; }
-    virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
-    public void setThrownPlayer(GameObject obj  ) { thrownPlayer = obj; }
-    public GameObject getThrownPlayer() { return thrownPlayer; }
+
 
     virtual protected void checkThrownBall()
     {
@@ -67,14 +98,44 @@ public class BallScript : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
     }
 
-    virtual public void reset() { }
+    override public void restart() {
+        base.restart();
+        isInAir = false;
+        hasBeenPickedUp = false;
+        respawn();
+        if (isInitted)
+            playerRestart();
+
+    }
+
+    public void playerRestart()
+    { 
+        rigid.velocity = Vector2.zero;
+    }
+
+    public override void unfreeze()
+    {
+        base.unfreeze();
+    }
 
     virtual public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Wall" || collision.transform.tag == "Ball" && thrownPlayer != collision.gameObject)
+        if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball") && thrownPlayer != collision.gameObject)
         {
-            isInAir = false;
+            if (!isInAir)
+                return;
+
+            thrownPlayer = null;
+            bounceCount--;
+            if (bounceCount <= 0)
+            {
+                bounceCount = startingBounceCount;
+                isInAir = false;
+            }
+
         }
 
     }
+
+
 }
