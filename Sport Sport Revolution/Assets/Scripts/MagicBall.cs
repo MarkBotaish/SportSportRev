@@ -27,6 +27,12 @@ public class MagicBall : BallScript {
         }
     }
 
+    override public void playerRestart()
+    {
+        rigid.velocity = Vector2.zero;
+        transform.localScale = originalScale;
+    }
+
 }
 
 

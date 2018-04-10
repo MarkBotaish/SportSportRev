@@ -55,8 +55,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.0001
-  m_LinearDrag: 0.25
-  m_AngularDrag: 0.05
+  m_LinearDrag: 0
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -91,7 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballThrownSpeed: 15
   fallSpeed: 2
-  startingColor: {r: 0, g: 0, b: 1, a: 1}
   type: 1
   bounceCount: 2
 --- !u!212 &212207528713675826
@@ -129,7 +128,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7cba93f8c77f5648b0f59900a40edc7, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

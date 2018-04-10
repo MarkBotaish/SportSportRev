@@ -171,7 +171,7 @@ public class PlayerScript : StopableObject {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir() && collision.gameObject.GetComponent<BallScript>().getThrownPlayer() != this)
+        if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir())
         {
             hit(collision.gameObject);
         }

@@ -108,7 +108,7 @@ public class BallScript : StopableObject {
 
     }
 
-    public void playerRestart()
+    virtual public void playerRestart()
     { 
         rigid.velocity = Vector2.zero;
     }
@@ -125,10 +125,10 @@ public class BallScript : StopableObject {
             if (!isInAir)
                 return;
 
-            thrownPlayer = null;
             bounceCount--;
             if (bounceCount <= 0)
             {
+                thrownPlayer = null;
                 bounceCount = startingBounceCount;
                 isInAir = false;
             }
