@@ -13,6 +13,9 @@ public class PlayerScript : StopableObject {
     public float speed;
     public float pullSpeed;
     public float freezeTime;
+    public float throwAngle;
+
+    private Vector2 throwingAngle;
 
     Rigidbody2D rigid;
     GameManagerScript code;
@@ -79,6 +82,10 @@ public class PlayerScript : StopableObject {
             vel += (Vector2.left + Vector2.down).normalized;
         if (Input.GetKey(KeyCode.C))
             vel += (Vector2.right + Vector2.down).normalized;
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            throwingAngle = new Vector2(Mathf.Cos(throwAngle*(Mathf.PI/180)), Mathf.Sin(throwAngle * (Mathf.PI / 180)));
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            throwingAngle = new Vector2(Mathf.Cos((180-throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
         rigid.velocity = vel * speed;
 
@@ -104,6 +111,10 @@ public class PlayerScript : StopableObject {
             vel += (Vector2.right + Vector2.up).normalized;
         if (Input.GetKey(KeyCode.Keypad3))
             vel += (Vector2.left + Vector2.up).normalized;
+        if (Input.GetKeyDown(KeyCode.KeypadDivide))
+            throwingAngle = new Vector2(Mathf.Cos(throwAngle * (Mathf.PI / 180)), Mathf.Sin(throwAngle * (Mathf.PI / 180)));
+        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+            throwingAngle = new Vector2(Mathf.Cos((180 - throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
         if (Input.GetKey(KeyCode.KeypadMinus))
             print("asdghuop");
@@ -123,25 +134,21 @@ public class PlayerScript : StopableObject {
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
+            throwingAngle = new Vector2(0,1);
+
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
-            Vector2 pos = gameObject.transform.position - ball.transform.position;
             BallScript ballScript = ball.GetComponent<BallScript>();
-            pos = -pos.normalized;
-            pos = rigid.velocity.normalized;
-            pos.y = y;
-            hasPickedUp = false;
 
-            if (ballScript.type == BallType.Laser)
-                pos.x = 0;
+            if (playerId == 1)
+                throwingAngle.y *= -1f;
 
-            ballScript.throwBall(pos);
+            ballScript.throwBall(throwingAngle);
             ballScript.setPickUp(false);
             ballScript.setIsInAir(true);
             ballScript.setThrownPlayer(this);
             ball = null;
-            gameObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
         //Might need to change

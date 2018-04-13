@@ -6,5 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 2909beb946e281c4ca6e150ce3c5b31b
+  - enabled: 1
     path: Assets/Scenes/DodgeBall.unity
     guid: 53e29b80d2ea42345a69ecba3b92c354
+  - enabled: 1
+    path: Assets/Scenes/HelpMenu.unity
+    guid: e4f9ccdfdab099e46a822258946495ee

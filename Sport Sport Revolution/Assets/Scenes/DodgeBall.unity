@@ -1786,6 +1786,7 @@ MonoBehaviour:
   speed: 5
   pullSpeed: 0.5
   freezeTime: 1.5
+  throwAngle: 60
   tint: {r: 0, g: 0, b: 0, a: 1}
 --- !u!50 &1002241517
 Rigidbody2D:
@@ -2086,6 +2087,7 @@ MonoBehaviour:
   playerTwoRound: {fileID: 194373153}
   playerOne: {fileID: 1002241516}
   playerTwo: {fileID: 1876792099}
+  numberOfRoundsToWin: 5
   objects:
   - {fileID: 501119439}
   - {fileID: 1351249674}
@@ -2978,6 +2980,7 @@ MonoBehaviour:
   speed: 5
   pullSpeed: 0.5
   freezeTime: 1.5
+  throwAngle: 60
   tint: {r: 0, g: 0, b: 0, a: 1}
 --- !u!50 &1876792100
 Rigidbody2D:

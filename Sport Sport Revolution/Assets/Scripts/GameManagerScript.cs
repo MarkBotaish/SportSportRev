@@ -15,6 +15,7 @@ public class GameManagerScript : MonoBehaviour {
     public Text playerTwoRound;
     public PlayerScript playerOne;
     public PlayerScript playerTwo;
+    public int numberOfRoundsToWin;
 
     public List<StopableObject> objects;
 
@@ -58,7 +59,11 @@ public class GameManagerScript : MonoBehaviour {
         for (int i = 0; i < objects.Count; i++)
             objects[i].restart();
 
-        StartCoroutine(roundStart());
+
+        if (roundsWonForTwo == numberOfRoundsToWin || roundsWonForOne == numberOfRoundsToWin)
+            print("Game Over");
+        else
+            StartCoroutine(roundStart());
     }
 
     IEnumerator roundStart()
