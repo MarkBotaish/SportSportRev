@@ -12,6 +12,7 @@ public class BallScript : StopableObject {
 
     public float ballThrownSpeed;
     public float fallSpeed;
+    protected float spawnPosition = 8.0f;
     Color startingColor;
     public BallType type;
     protected bool isInitted = false;
@@ -24,7 +25,9 @@ public class BallScript : StopableObject {
     protected Rigidbody2D rigid;
     public int bounceCount;
     protected int startingBounceCount;
+    protected float startingSpawnPosition;
 
+    virtual public void moveSpawnPositionIn(float offset) { spawnPosition -= offset; }
     virtual public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
     virtual public bool getPickUp() { return hasBeenPickedUp; }
     virtual public void setIsInAir(bool tof) { isInAir = tof; }
@@ -35,6 +38,7 @@ public class BallScript : StopableObject {
     public PlayerScript getThrownPlayer() { return thrownPlayer; }
 
     virtual protected void Start() {
+        startingSpawnPosition = spawnPosition;
         startingBounceCount = bounceCount;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         startingColor = gameObject.GetComponent<SpriteRenderer>().color;
@@ -73,11 +77,11 @@ public class BallScript : StopableObject {
 
         if (rand == 0)
         {
-            transform.position = new Vector3(transform.position.x, 8.0f, 0);
+            transform.position = new Vector3(transform.position.x, spawnPosition, 0);
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, -8.0f, 0);
+            transform.position = new Vector3(transform.position.x, -spawnPosition, 0);
         }
 
         bounceCount = startingBounceCount;
@@ -136,6 +140,10 @@ public class BallScript : StopableObject {
         }
 
     }
-
+    virtual public void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && thrownPlayer == collision.gameObject.GetComponent<PlayerScript>())
+            collision.gameObject.GetComponent<PlayerScript>().LeftSpace();
+    }
 
 }

@@ -43,7 +43,7 @@ public class ExplosiveBall : BallScript {
     IEnumerator childEnable()
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

@@ -9,6 +9,7 @@ public class PlayerScript : StopableObject {
     bool isDead = false;
     bool isStunned = false;
     bool isInitted = false;
+    bool hasLeftSpace = true;
 
     public float speed;
     public float pullSpeed;
@@ -135,6 +136,7 @@ public class PlayerScript : StopableObject {
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
             throwingAngle = new Vector2(0,1);
+            hasLeftSpace = false;   
 
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
@@ -180,7 +182,8 @@ public class PlayerScript : StopableObject {
     {
         if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir())
         {
-            hit(collision.gameObject);
+            if(collision.gameObject.GetComponent<BallScript>().getThrownPlayer() == this && hasLeftSpace)
+                hit(collision.gameObject);
         }
     }
 
@@ -229,4 +232,6 @@ public class PlayerScript : StopableObject {
             return true;
         return false;
     }
+
+    public void LeftSpace() { hasLeftSpace = true; }
 }
