@@ -20,7 +20,8 @@ public class ExplosiveBall : BallScript {
     {
         base.doAction();
         isInAir = false;
-        thrownPlayer = null;
+        recentlyThrownPlayer = null;
+        activatePlayer = null;
         print("BOOM");
         if (hitPlayer != null)
             hitPlayer.hit(gameObject);

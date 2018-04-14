@@ -30,6 +30,8 @@ public class GameManagerScript : MonoBehaviour {
     public List<StopableObject> objects;
     public List<AudioClip> roundSounds;
 
+    List<BallScript> ballList;
+
     int round = 0;
     int soundIndex = 0;
     int roundsWonForOne = 0;
@@ -42,7 +44,6 @@ public class GameManagerScript : MonoBehaviour {
 
     public float AntiCampDelay;
     bool isMoving = false;
-    int index = 0;
     float timer = 0;
 
 
@@ -50,9 +51,17 @@ public class GameManagerScript : MonoBehaviour {
     void Start () {
         code = this;
         audio = GetComponent<AudioSource>();
+        ballList = new List<BallScript>();
+        for (int i = 0; i < objects.Count; i++)
+            if (objects[i].gameObject.tag == "Ball")
+                ballList.Add(objects[i].GetComponent<BallScript>());
+
+
         updateRound();
         playerOne.setManager(this);
         playerTwo.setManager(this);
+
+       
     }
 	
 	// Update is called once per frame
@@ -65,11 +74,11 @@ public class GameManagerScript : MonoBehaviour {
                 isEnding = false;
                 StartCoroutine(waitToChangeScreens());
             }
-        }
-        if(changeScene)
+        }else if (changeScene)
+        {
             changePanel();
-
-        if (!isEnding && !changeScene)
+        }  
+        else
             checkAntiCamp();
        
     }
@@ -79,11 +88,18 @@ public class GameManagerScript : MonoBehaviour {
         if (timer >= AntiCampDelay)
         {
             if (!isMoving)
+            {
                 WallManagerScript.code.spawnWalls();
+                for (int i = 0; i < ballList.Count; i++)
+                    ballList[i].moveSpawnPositionIn(1.5f);
+            }
 
             isMoving = WallManagerScript.code.antiCamper();
+
             if (!isMoving)
                 timer = 0;
+            
+
         }
         else
         {
@@ -135,7 +151,10 @@ public class GameManagerScript : MonoBehaviour {
             StartCoroutine(roundStart());
         }
         if (round > 1)
+        {
             WallManagerScript.code.resetWalls();
+        }
+          
        
     }
 
@@ -168,10 +187,5 @@ public class GameManagerScript : MonoBehaviour {
             panelOne.GetComponent<Image>().color += new Color(0, 0, 0, 0.05f);
             panelTwo.GetComponent<Image>().color += new Color(0, 0, 0, 0.05f);
         }
-        else
-        {
-
-        }
-           
     }
 }

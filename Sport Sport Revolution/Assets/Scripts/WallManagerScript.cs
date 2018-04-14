@@ -13,17 +13,27 @@ public class WallManagerScript : MonoBehaviour {
 
     public GameObject horizontalPrefab;
 
+    Vector3 wallP1Position;
+    Vector3 wallP2Position;
+
+
     public float delay;
     int index = -1;
     int yPositionIndex = 0;
 
 	// Use this for initialization
 	void Start () {
+        wallP1Position = middleWallP1.transform.position;
+        wallP2Position = middleWallP2.transform.position;
         code = this;
     }
 
     public bool antiCamper()
     {
+
+        if (updatingWalls.Count <= 0)
+            return false;
+
         if(Mathf.Abs(updatingWalls[index].transform.position.x) > 2.75)
         {
             updatingWalls[index -3].transform.position -= new Vector3(0.05f, 0, 0);
@@ -36,6 +46,7 @@ public class WallManagerScript : MonoBehaviour {
         else if(middleWallP1.transform.position.y <= -10.25 + ((yPositionIndex) * 1.5f))
         {
             middleWallP1.transform.position += new Vector3(0.0f, 0.05f, 0.0f);
+            middleWallP2.transform.position -= new Vector3(0.0f, 0.05f, 0.0f);
             return true;
         }
         
@@ -62,5 +73,8 @@ public class WallManagerScript : MonoBehaviour {
         updatingWalls.Clear();
         index = -1;
         yPositionIndex = 0;
+
+        middleWallP1.transform.position = wallP1Position;
+        middleWallP2.transform.position = wallP2Position;
     }
 }

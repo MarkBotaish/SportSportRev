@@ -12,13 +12,14 @@ public class BallScript : StopableObject {
 
     public float ballThrownSpeed;
     public float fallSpeed;
-    protected float spawnPosition = 8.0f;
+    protected float spawnPosition;
     Color startingColor;
     public BallType type;
     protected bool isInitted = false;
 
 
-    protected PlayerScript thrownPlayer;
+    protected PlayerScript activatePlayer;
+    protected GameObject recentlyThrownPlayer;
 
     protected bool hasBeenPickedUp = false;
     protected bool isInAir = false;
@@ -33,11 +34,23 @@ public class BallScript : StopableObject {
     virtual public void setIsInAir(bool tof) { isInAir = tof; }
     virtual public bool getIsInAir() { return isInAir; }
     virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
-    virtual protected void doAction() { thrownPlayer = null; }
-    public void setThrownPlayer(PlayerScript obj) { thrownPlayer = obj; }
-    public PlayerScript getThrownPlayer() { return thrownPlayer; }
+    public PlayerScript getActivatePlayer() { return activatePlayer; }
+    public GameObject getRecentlyThrownPlayer() { return recentlyThrownPlayer; }
+
+    public void setActivatePlayer(PlayerScript obj)
+    {
+        activatePlayer = obj;
+        recentlyThrownPlayer = obj.gameObject;
+    }
+
+    virtual protected void doAction()
+    {
+        recentlyThrownPlayer = null;
+        activatePlayer = null;
+    }
 
     virtual protected void Start() {
+        spawnPosition = 8.0f;
         startingSpawnPosition = spawnPosition;
         startingBounceCount = bounceCount;
         rigid = gameObject.GetComponent<Rigidbody2D>();
@@ -62,7 +75,7 @@ public class BallScript : StopableObject {
                 rigid.velocity = new Vector2(rigid.velocity.x, fallSpeed);
         }
 
-        if (thrownPlayer != null && thrownPlayer.getAction())
+        if (activatePlayer != null && activatePlayer.getAction())
             doAction();
 
 
@@ -107,6 +120,7 @@ public class BallScript : StopableObject {
         isInAir = false;
         hasBeenPickedUp = false;
         respawn();
+        spawnPosition = startingSpawnPosition;
         if (isInitted)
             playerRestart();
 
@@ -124,26 +138,25 @@ public class BallScript : StopableObject {
 
     virtual public void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball") && thrownPlayer != collision.gameObject)
+        if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball") && activatePlayer != collision.gameObject)
         {
+            if(recentlyThrownPlayer != null)
+                recentlyThrownPlayer = null;
+
+
             if (!isInAir)
                 return;
 
             bounceCount--;
             if (bounceCount <= 0)
             {
-                thrownPlayer = null;
+                activatePlayer = null;
                 bounceCount = startingBounceCount;
                 isInAir = false;
             }
 
         }
 
-    }
-    virtual public void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player" && thrownPlayer == collision.gameObject.GetComponent<PlayerScript>())
-            collision.gameObject.GetComponent<PlayerScript>().LeftSpace();
     }
 
 }
