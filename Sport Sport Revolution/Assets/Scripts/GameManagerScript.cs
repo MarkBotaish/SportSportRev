@@ -19,6 +19,9 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject panelOne;
     public GameObject panelTwo;
 
+    public GameObject winScreenOne;
+    public GameObject winScreenTwo;
+
     public PlayerScript playerOne;
     public PlayerScript playerTwo;
 
@@ -110,7 +113,8 @@ public class GameManagerScript : MonoBehaviour {
     public void firstPlayerWon()
     {
         roundsWonForOne++;
-        playerOneText.text = "Won: " + roundsWonForOne;
+        playerOneText.text = "Won: " + roundsWonForOne + "/" + round;
+        playerTwoText.text = "Won: " + roundsWonForTwo + "/" + round;
         updateRound();
         
     }
@@ -118,7 +122,8 @@ public class GameManagerScript : MonoBehaviour {
     public void secondPlayerWon()
     {
         roundsWonForTwo++;
-        playerTwoText.text = "Won: " + roundsWonForTwo;
+        playerTwoText.text = "Won: " + roundsWonForTwo + "/" + round;
+        playerOneText.text = "Won: " + roundsWonForOne + "/" + round;
         updateRound();
     }
     void updateRound()
@@ -187,5 +192,23 @@ public class GameManagerScript : MonoBehaviour {
             panelOne.GetComponent<Image>().color += new Color(0, 0, 0, 0.05f);
             panelTwo.GetComponent<Image>().color += new Color(0, 0, 0, 0.05f);
         }
+        else
+        {
+            winScreenOne.SetActive(true);
+            winScreenTwo.SetActive(true);
+
+            if (roundsWonForTwo == numberOfRoundsToWin)
+            {
+                winScreenOne.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Player 2 Wins!";
+                winScreenTwo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Player 2 Wins!";
+            }
+               
+        }
+    }
+
+    public void togglePause()
+    {
+        for (int i = 0; i < objects.Count; i++)
+            objects[i].togglePause();
     }
 }

@@ -39,9 +39,8 @@ public class PlayerScript : StopableObject {
     }
 
     // Update is called once per frame
-    void Update() {
-
-        if (isForzen)
+    void Update() { 
+        if (isForzen || isPaused)
             return;
 
         if (playerId == 0 && !isDead)
@@ -61,8 +60,10 @@ public class PlayerScript : StopableObject {
             else
                 code.secondPlayerWon();
         }
-
     }
+
+
+
     void playerOneMovement()
     {
         Vector2 vel = Vector2.up * pullSpeed;
@@ -221,6 +222,16 @@ public class PlayerScript : StopableObject {
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
             rigid.velocity = Vector3.zero;
             gameObject.transform.position = startingPos;
+        }
+    }
+    public override void togglePause()
+    {
+        base.togglePause();
+
+        if (isPaused)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = startingColor;
+            rigid.velocity = Vector3.zero;
         }
     }
 

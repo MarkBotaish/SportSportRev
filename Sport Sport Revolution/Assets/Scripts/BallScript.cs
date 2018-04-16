@@ -27,6 +27,7 @@ public class BallScript : StopableObject {
     public int bounceCount;
     protected int startingBounceCount;
     protected float startingSpawnPosition;
+    protected Vector2 currentVelocity;
 
     virtual public void moveSpawnPositionIn(float offset) { spawnPosition -= offset; }
     virtual public void setPickUp(bool tof) { hasBeenPickedUp = tof; }
@@ -60,8 +61,10 @@ public class BallScript : StopableObject {
 
     public virtual void Update()
     {
-        if (isForzen)
+        if (isForzen || isPaused)
             return;
+
+        currentVelocity = rigid.velocity;
 
         checkThrownBall();
         if (Mathf.Abs(transform.position.y) < 0.5 && !isInAir && !hasBeenPickedUp)
@@ -124,6 +127,20 @@ public class BallScript : StopableObject {
         if (isInitted)
             playerRestart();
 
+    }
+
+    public override void togglePause()
+    {
+        base.togglePause();
+
+        if (isPaused)
+        {
+            rigid.velocity = Vector2.zero;
+        }
+        else
+        {
+            rigid.velocity = currentVelocity;
+        }
     }
 
     virtual public void playerRestart()
