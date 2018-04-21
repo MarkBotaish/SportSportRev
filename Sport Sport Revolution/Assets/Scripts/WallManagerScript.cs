@@ -11,7 +11,8 @@ public class WallManagerScript : MonoBehaviour {
     public GameObject middleWallP1;
     public GameObject middleWallP2;
 
-    public GameObject horizontalPrefab;
+    public GameObject leftPrefab;
+    public GameObject rightPrefab;
 
     Vector3 wallP1Position;
     Vector3 wallP2Position;
@@ -56,11 +57,13 @@ public class WallManagerScript : MonoBehaviour {
 
     public void spawnWalls()
     {
-        updatingWalls.Add( Instantiate(horizontalPrefab, new Vector2(7.75f, -7.5f + ((yPositionIndex) * 1.5f)), Quaternion.identity));
-        updatingWalls.Add(Instantiate(horizontalPrefab, new Vector2(-7.75f, -7.5f + ((yPositionIndex) * 1.5f)), Quaternion.identity));
+        updatingWalls.Add( Instantiate(rightPrefab, new Vector2(7.75f, -7.5f + ((yPositionIndex) * 1.5f)), Quaternion.identity));
+        updatingWalls.Add(Instantiate(leftPrefab, new Vector2(-7.75f, -7.5f + ((yPositionIndex) * 1.5f)), Quaternion.identity));
 
-        updatingWalls.Add(Instantiate(horizontalPrefab, new Vector2(7.75f, 7.5f - ((yPositionIndex) * 1.5f)), Quaternion.identity));
-        updatingWalls.Add(Instantiate(horizontalPrefab, new Vector2(-7.75f, 7.5f - ((yPositionIndex) * 1.5f)), Quaternion.identity));
+        updatingWalls.Add(Instantiate(leftPrefab, new Vector2(7.75f, 7.5f - ((yPositionIndex) * 1.5f)), Quaternion.identity));
+        updatingWalls[updatingWalls.Count - 1].transform.rotation = Quaternion.Euler(0, 0, 180);
+        updatingWalls.Add(Instantiate(rightPrefab, new Vector2(-7.75f, 7.5f - ((yPositionIndex) * 1.5f)), Quaternion.identity));
+        updatingWalls[updatingWalls.Count - 1].transform.rotation = Quaternion.Euler(0, 0, 180);
         index += 4;
         yPositionIndex++;
     }

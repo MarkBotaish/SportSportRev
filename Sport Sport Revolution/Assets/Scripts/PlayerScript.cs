@@ -9,11 +9,17 @@ public class PlayerScript : StopableObject {
     bool isDead = false;
     bool isStunned = false;
     bool isInitted = false;
+    bool canPickup = true;
 
     public float speed;
     public float pullSpeed;
     public float freezeTime;
     public float throwAngle;
+
+    private float startingFreezeTime;
+
+    public List<int> numberOfParticles;
+    int particleIndex = 0;
 
     private Vector2 throwingAngle;
 
@@ -27,6 +33,9 @@ public class PlayerScript : StopableObject {
 
     private Vector3 startingPos;
 
+    ParticleSystem pSystem;
+    ParticleSystem.EmissionModule emissionSystem;
+
     public void setManager(GameManagerScript manage) { code = manage; }
 
     // Use this for initialization
@@ -35,7 +44,9 @@ public class PlayerScript : StopableObject {
         startingPos = gameObject.transform.position;
         startingColor = gameObject.GetComponent<SpriteRenderer>().color;
         isInitted = true;
-
+        pSystem = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
+        emissionSystem = pSystem.emission;
+        startingFreezeTime = freezeTime;
     }
 
     // Update is called once per frame
@@ -60,6 +71,9 @@ public class PlayerScript : StopableObject {
             else
                 code.secondPlayerWon();
         }
+
+        if (hasPickedUp)
+            emissionSystem.rateOverTime = numberOfParticles[getParticleNumber()];
     }
 
 
@@ -129,18 +143,19 @@ public class PlayerScript : StopableObject {
 
     void pickup(KeyCode key, float y)
     {
-        if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead)
+        if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup)
         {
             ball.GetComponent<BallScript>().playerRestart();
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
             throwingAngle = new Vector2(0,1);
+            pSystem.Play();
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
             BallScript ballScript = ball.GetComponent<BallScript>();
-
+            pSystem.Stop();
             if (playerId == 1)
                 throwingAngle.y *= -1f;
 
@@ -148,6 +163,8 @@ public class PlayerScript : StopableObject {
             ballScript.setPickUp(false);
             ballScript.setIsInAir(true);
             ballScript.setActivatePlayer(this);
+            ballScript.setSunMulti(particleIndex);
+            ball.layer = 13;
             ball = null;
         }
 
@@ -158,6 +175,24 @@ public class PlayerScript : StopableObject {
         if (hasPickedUp)
             ball.transform.position = gameObject.transform.GetChild(0).transform.position;
 
+    }
+
+    private int getParticleNumber()
+    {
+        if (Mathf.Abs(gameObject.transform.position.y / GameManagerScript.code.getBallLength()) <= 0.33f)
+        {
+            particleIndex = 2;
+            return 2;
+        }
+            
+        if (Mathf.Abs(gameObject.transform.position.y / GameManagerScript.code.getBallLength()) <= 0.66f)
+        {
+            particleIndex = 1;
+            return 1;
+        }
+
+        particleIndex = 0;
+        return 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -180,10 +215,18 @@ public class PlayerScript : StopableObject {
     {
         if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir())
         {
-            
             if(collision.gameObject.GetComponent<BallScript>().getRecentlyThrownPlayer() != gameObject)
                 hit(collision.gameObject);
         }
+
+        if (collision.transform.tag == "BackWall")
+            canPickup = false;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "BackWall")
+            canPickup = true;
     }
 
     public void hit(GameObject col)
@@ -193,6 +236,9 @@ public class PlayerScript : StopableObject {
         gameObject.GetComponent<SpriteRenderer>().color = tint;
         print("DEAD");
         col.GetComponent<BallScript>().setIsInAir(false);
+        freezeTime *= col.GetComponent<BallScript>().getStunMulit();
+        col.GetComponent<BallScript>().setSunMulti(0);
+        col.layer = 8;
         StartCoroutine(freeze());
     }
 
@@ -208,6 +254,7 @@ public class PlayerScript : StopableObject {
 
             isStunned = true;
             yield return new WaitForSeconds(freezeTime);
+            freezeTime = startingFreezeTime;
             isStunned = false;
             isDead = false;
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
@@ -241,4 +288,5 @@ public class PlayerScript : StopableObject {
             return true;
         return false;
     }
+
 }

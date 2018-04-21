@@ -22,7 +22,6 @@ public class ExplosiveBall : BallScript {
         isInAir = false;
         recentlyThrownPlayer = null;
         activatePlayer = null;
-        print("BOOM");
         if (hitPlayer != null)
             hitPlayer.hit(gameObject);
         StartCoroutine(childEnable());

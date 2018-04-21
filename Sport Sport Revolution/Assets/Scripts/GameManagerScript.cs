@@ -39,6 +39,7 @@ public class GameManagerScript : MonoBehaviour {
     int soundIndex = 0;
     int roundsWonForOne = 0;
     int roundsWonForTwo = 0;
+    float startingBall = 8.0f;
 
     bool isEnding = false;
     bool changeScene = false;
@@ -100,9 +101,10 @@ public class GameManagerScript : MonoBehaviour {
             isMoving = WallManagerScript.code.antiCamper();
 
             if (!isMoving)
+            {
                 timer = 0;
-            
-
+                startingBall -= 1.5f;
+            }
         }
         else
         {
@@ -211,4 +213,6 @@ public class GameManagerScript : MonoBehaviour {
         for (int i = 0; i < objects.Count; i++)
             objects[i].togglePause();
     }
+
+    public float getBallLength() { return startingBall; }
 }

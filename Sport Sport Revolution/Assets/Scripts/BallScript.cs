@@ -16,6 +16,7 @@ public class BallScript : StopableObject {
     Color startingColor;
     public BallType type;
     protected bool isInitted = false;
+    protected float stunMultiplier = 1.0f;
 
 
     protected PlayerScript activatePlayer;
@@ -37,6 +38,18 @@ public class BallScript : StopableObject {
     virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
     public PlayerScript getActivatePlayer() { return activatePlayer; }
     public GameObject getRecentlyThrownPlayer() { return recentlyThrownPlayer; }
+    public float getStunMulit() { return stunMultiplier; }
+
+    public void setSunMulti(int num)
+    {
+        if (num == 1)
+            stunMultiplier = 1.25f;
+        else if (num == 2)
+            stunMultiplier = 1.75f;
+        else stunMultiplier = 1.0f;
+
+    }
+
 
     public void setActivatePlayer(PlayerScript obj)
     {
@@ -80,9 +93,6 @@ public class BallScript : StopableObject {
 
         if (activatePlayer != null && activatePlayer.getAction())
             doAction();
-
-
-
     }
 
     protected void respawn()
@@ -155,11 +165,10 @@ public class BallScript : StopableObject {
 
     virtual public void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball") && activatePlayer != collision.gameObject)
+        if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball" || collision.transform.tag == "BackWall") && activatePlayer != collision.gameObject && isInAir)
         {
             if(recentlyThrownPlayer != null)
                 recentlyThrownPlayer = null;
-
 
             if (!isInAir)
                 return;
@@ -170,6 +179,8 @@ public class BallScript : StopableObject {
                 activatePlayer = null;
                 bounceCount = startingBounceCount;
                 isInAir = false;
+                gameObject.layer = 8;
+                stunMultiplier = 1.0f;
             }
 
         }

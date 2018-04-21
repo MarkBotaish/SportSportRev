@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Wall
+  - BackWall
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Ball Bounce
   - Player
   - Walls
-  - 
+  - FlyingBalls
   - 
   - 
   - 
