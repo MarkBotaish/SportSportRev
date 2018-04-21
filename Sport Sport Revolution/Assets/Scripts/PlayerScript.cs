@@ -21,7 +21,7 @@ public class PlayerScript : StopableObject {
     public List<int> numberOfParticles;
     int particleIndex = 0;
 
-    private Vector2 throwingAngle;
+    private Vector2 throwingAngle = Vector2.up;
 
     Rigidbody2D rigid;
     GameManagerScript code;
@@ -36,7 +36,12 @@ public class PlayerScript : StopableObject {
     ParticleSystem pSystem;
     ParticleSystem.EmissionModule emissionSystem;
 
+    Animator anim;
+
     public void setManager(GameManagerScript manage) { code = manage; }
+
+    void stopLoadingAnimation() {  anim.SetBool("Loading", false); }
+    void stopShootingAnimation() { anim.SetBool("Shooting", false); }
 
     // Use this for initialization
     void Start() {
@@ -47,6 +52,9 @@ public class PlayerScript : StopableObject {
         pSystem = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
         emissionSystem = pSystem.emission;
         startingFreezeTime = freezeTime;
+        anim = gameObject.GetComponent<Animator>();
+
+
     }
 
     // Update is called once per frame
@@ -81,6 +89,10 @@ public class PlayerScript : StopableObject {
     void playerOneMovement()
     {
         Vector2 vel = Vector2.up * pullSpeed;
+
+        if(!hasPickedUp)
+            throwingAngle = Vector2.zero;
+
         if (Input.GetKey(KeyCode.W))
             vel += Vector2.up;
         if (Input.GetKey(KeyCode.S))
@@ -102,13 +114,18 @@ public class PlayerScript : StopableObject {
         if (Input.GetKeyDown(KeyCode.Alpha1))
             throwingAngle = new Vector2(Mathf.Cos((180-throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
-        rigid.velocity = vel * speed;
+        if(hasPickedUp || throwingAngle == Vector2.zero)
+            gameObject.transform.localRotation = (Quaternion.Euler(0, 0, throwAngle * -throwingAngle.x));
 
+        rigid.velocity = vel * speed;
         pickup(KeyCode.R, 1.0f);
     }
 
     void playerTwoMovement()
     {
+        if (!hasPickedUp)
+            throwingAngle = Vector2.zero;
+
         Vector2 vel = Vector2.down * pullSpeed;
         if (Input.GetKey(KeyCode.Keypad8))
             vel += Vector2.down;
@@ -131,11 +148,11 @@ public class PlayerScript : StopableObject {
         if (Input.GetKeyDown(KeyCode.KeypadMultiply))
             throwingAngle = new Vector2(Mathf.Cos((180 - throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
-        if (Input.GetKey(KeyCode.KeypadMinus))
-            print("asdghuop");
+        if (hasPickedUp || throwingAngle == Vector2.zero)
+            gameObject.transform.localRotation = (Quaternion.Euler(0, 0, throwAngle * throwingAngle.x));
 
         rigid.velocity = vel * speed;
-
+        
         pickup(KeyCode.KeypadPlus, -1.0f);
 
     }
@@ -145,15 +162,23 @@ public class PlayerScript : StopableObject {
     {
         if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup)
         {
+           if(playerId == 0)
+                anim.SetBool("Loading", true);
+
             ball.GetComponent<BallScript>().playerRestart();
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
             throwingAngle = new Vector2(0,1);
             pSystem.Play();
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
+            if (playerId == 0)
+                anim.SetBool("Shooting", true);
+
             BallScript ballScript = ball.GetComponent<BallScript>();
             pSystem.Stop();
             if (playerId == 1)
@@ -166,6 +191,7 @@ public class PlayerScript : StopableObject {
             ballScript.setSunMulti(particleIndex);
             ball.layer = 13;
             ball = null;
+            
         }
 
         //Might need to change
@@ -269,6 +295,13 @@ public class PlayerScript : StopableObject {
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
             rigid.velocity = Vector3.zero;
             gameObject.transform.position = startingPos;
+            throwingAngle = Vector2.zero;
+
+            if(playerId == 0)
+            {
+                stopLoadingAnimation();
+                stopShootingAnimation();
+            }
         }
     }
     public override void togglePause()

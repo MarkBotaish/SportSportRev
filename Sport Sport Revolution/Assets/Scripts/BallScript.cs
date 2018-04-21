@@ -110,6 +110,18 @@ public class BallScript : StopableObject {
             transform.position = new Vector3(transform.position.x, -spawnPosition, 0);
         }
 
+        if(Mathf.Abs(transform.position.x) > 4)
+        {
+            if (rand == 0)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y -1, 0);
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
+            }
+        }
+
         bounceCount = startingBounceCount;
     }
 
