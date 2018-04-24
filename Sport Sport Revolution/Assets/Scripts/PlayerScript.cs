@@ -3,7 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerScript : StopableObject {
 
+    public enum BallType
+    {
+        Base, Laser, Magic, Explosive
+    }
+
+    [Header("General")]
+
     public int playerId;
+    public float speed;
+    public float pullSpeed;
+    public float freezeTime;
+    public float throwAngle;
+    public float laserLength;
+    public List<int> numberOfParticles;
+    public Color tint;
 
     bool hasPickedUp = false;
     bool isDead = false;
@@ -11,32 +25,26 @@ public class PlayerScript : StopableObject {
     bool isInitted = false;
     bool canPickup = true;
 
-    public float speed;
-    public float pullSpeed;
-    public float freezeTime;
-    public float throwAngle;
+    [Header("Laser")]
+    public bool useLaser = false;
+    public LineRenderer lineRenderer;
+    public LayerMask layers;
 
     private float startingFreezeTime;
-
-    public List<int> numberOfParticles;
+    private Vector2 throwingAngle = Vector2.up;
+    private Color startingColor;
+    private Vector3 startingPos;
     int particleIndex = 0;
 
-    private Vector2 throwingAngle = Vector2.up;
+   
 
     Rigidbody2D rigid;
     GameManagerScript code;
-
     GameObject ball = null;
-
-    public Color tint;
-    private Color startingColor;
-
-    private Vector3 startingPos;
-
     ParticleSystem pSystem;
     ParticleSystem.EmissionModule emissionSystem;
-
     Animator anim;
+
 
     public void setManager(GameManagerScript manage) { code = manage; }
 
@@ -53,7 +61,6 @@ public class PlayerScript : StopableObject {
         emissionSystem = pSystem.emission;
         startingFreezeTime = freezeTime;
         anim = gameObject.GetComponent<Animator>();
-
 
     }
 
@@ -82,8 +89,33 @@ public class PlayerScript : StopableObject {
 
         if (hasPickedUp)
             emissionSystem.rateOverTime = numberOfParticles[getParticleNumber()];
+
+        getLaserTarget();
     }
 
+    void getLaserTarget()
+    {
+        if (useLaser) 
+            laser();
+    }
+
+    void laser()
+    {
+        RaycastHit2D hit;
+        if (playerId == 0)
+             hit = Physics2D.Raycast(gameObject.transform.position,Vector2.up, Mathf.Infinity, layers);
+        else
+            hit = Physics2D.Raycast(gameObject.transform.position, Vector2.down, Mathf.Infinity, layers);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.tag == "Player")
+                hit.collider.gameObject.GetComponent<PlayerScript>().hit(hit.collider.gameObject,1); 
+        }
+
+        lineRenderer.SetPosition(0, lineRenderer.gameObject.transform.position);
+        lineRenderer.SetPosition(1, hit.point);
+    }
 
 
     void playerOneMovement()
@@ -111,6 +143,8 @@ public class PlayerScript : StopableObject {
             vel += (Vector2.right + Vector2.down).normalized;
         if (Input.GetKeyDown(KeyCode.Alpha3))
             throwingAngle = new Vector2(Mathf.Cos(throwAngle*(Mathf.PI/180)), Mathf.Sin(throwAngle * (Mathf.PI / 180)));
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            throwingAngle = Vector2.zero;
         if (Input.GetKeyDown(KeyCode.Alpha1))
             throwingAngle = new Vector2(Mathf.Cos((180-throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
@@ -145,14 +179,16 @@ public class PlayerScript : StopableObject {
             vel += (Vector2.left + Vector2.up).normalized;
         if (Input.GetKeyDown(KeyCode.KeypadDivide))
             throwingAngle = new Vector2(Mathf.Cos(throwAngle * (Mathf.PI / 180)), Mathf.Sin(throwAngle * (Mathf.PI / 180)));
-        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
             throwingAngle = new Vector2(Mathf.Cos((180 - throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
+        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+            throwingAngle = Vector2.zero;
 
-        if (hasPickedUp || throwingAngle == Vector2.zero)
+        if ((hasPickedUp || throwingAngle == Vector2.zero) && (ball != null && (int)ball.GetComponent<BallScript>().getBallType() != 1))
             gameObject.transform.localRotation = (Quaternion.Euler(0, 0, throwAngle * throwingAngle.x));
 
         rigid.velocity = vel * speed;
-        
+
         pickup(KeyCode.KeypadPlus, -1.0f);
 
     }
@@ -162,13 +198,13 @@ public class PlayerScript : StopableObject {
     {
         if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup)
         {
-           if(playerId == 0)
-                anim.SetBool("Loading", true);
+             anim.SetBool("Loading", true);
 
             ball.GetComponent<BallScript>().playerRestart();
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            hasPickedUp = true;
             ball.GetComponent<BallScript>().setPickUp(true);
+            hasPickedUp = true;
+            
             throwingAngle = new Vector2(0,1);
             pSystem.Play();
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -176,20 +212,26 @@ public class PlayerScript : StopableObject {
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
-            if (playerId == 0)
-                anim.SetBool("Shooting", true);
+            anim.SetBool("Shooting", true);
 
             BallScript ballScript = ball.GetComponent<BallScript>();
             pSystem.Stop();
             if (playerId == 1)
                 throwingAngle.y *= -1f;
 
-            ballScript.throwBall(throwingAngle);
-            ballScript.setPickUp(false);
-            ballScript.setIsInAir(true);
-            ballScript.setActivatePlayer(this);
+            if ((int)ballScript.getBallType() == 1)
+            {
+                StartCoroutine(startLaser());
+                ball.GetComponent<LaserBall>().setLaserTime(laserLength);
+            }
+            else
+            {
+               
+                ball.layer = 13;
+            }
+
             ballScript.setSunMulti(particleIndex);
-            ball.layer = 13;
+            ballScript.throwBall(throwingAngle, this);
             ball = null;
             
         }
@@ -255,16 +297,21 @@ public class PlayerScript : StopableObject {
             canPickup = true;
     }
 
-    public void hit(GameObject col)
+    public void hit(GameObject col, int flag = 0)
     {
-        col.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        if(flag == 0)
+        {
+            col.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            col.GetComponent<BallScript>().setIsInAir(false);
+            col.GetComponent<BallScript>().setSunMulti(0);
+            col.layer = 8;
+            freezeTime *= col.GetComponent<BallScript>().getStunMulit();
+        }
+        
         isDead = true;
         gameObject.GetComponent<SpriteRenderer>().color = tint;
         print("DEAD");
-        col.GetComponent<BallScript>().setIsInAir(false);
-        freezeTime *= col.GetComponent<BallScript>().getStunMulit();
-        col.GetComponent<BallScript>().setSunMulti(0);
-        col.layer = 8;
+      
         StartCoroutine(freeze());
     }
 
@@ -287,6 +334,15 @@ public class PlayerScript : StopableObject {
         }
     }
 
+    IEnumerator startLaser()
+    {
+        useLaser = true;
+        yield return new WaitForSeconds(laserLength);
+        lineRenderer.SetPosition(0, Vector2.zero);
+        lineRenderer.SetPosition(1, Vector2.zero);
+        useLaser = false;
+    }
+
     public override void restart()
     {
         base.restart();
@@ -296,12 +352,11 @@ public class PlayerScript : StopableObject {
             rigid.velocity = Vector3.zero;
             gameObject.transform.position = startingPos;
             throwingAngle = Vector2.zero;
+            pSystem.Stop();
 
-            if(playerId == 0)
-            {
-                stopLoadingAnimation();
-                stopShootingAnimation();
-            }
+            stopLoadingAnimation();
+            stopShootingAnimation();
+            
         }
     }
     public override void togglePause()
@@ -317,7 +372,7 @@ public class PlayerScript : StopableObject {
 
     public bool getAction()
     {
-        if ((playerId == 0 && Input.GetKey(KeyCode.F)) || (playerId == 1 && Input.GetKey(KeyCode.KeypadMinus)))
+        if ((playerId == 0 && Input.GetKey(KeyCode.F)) || (playerId == 1 && Input.GetKey(KeyCode.KeypadEnter)))
             return true;
         return false;
     }

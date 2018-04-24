@@ -12,7 +12,8 @@ public class MagicBall : BallScript {
         originalScale = transform.localScale;
     }
 
-    override public void throwBall(Vector2 vel) {
+    override public void throwBall(Vector2 vel, PlayerScript obj) {
+        base.throwBall(vel, obj);
         rigid.velocity = vel * (ballThrownSpeed + Random.Range(-4,10));
         transform.localScale *=  4.0f / Random.Range(1,11);
     }

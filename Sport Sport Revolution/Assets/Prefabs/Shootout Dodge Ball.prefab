@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212207528713675826}
   - component: {fileID: 58347203961075512}
   - component: {fileID: 50230436717243888}
-  - component: {fileID: 114283002493981572}
+  - component: {fileID: 114337005970913148}
   m_Layer: 8
   m_Name: Shootout Dodge Ball
   m_TagString: Ball
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661784409127968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.56
---- !u!114 &114283002493981572
+--- !u!114 &114337005970913148
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1661784409127968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31aa198fa892ba64da24df249aa343f3, type: 3}
+  m_Script: {fileID: 11500000, guid: eda458595e7c96d42a26bf044c128878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ballThrownSpeed: 15

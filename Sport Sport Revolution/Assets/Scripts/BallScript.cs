@@ -35,10 +35,17 @@ public class BallScript : StopableObject {
     virtual public bool getPickUp() { return hasBeenPickedUp; }
     virtual public void setIsInAir(bool tof) { isInAir = tof; }
     virtual public bool getIsInAir() { return isInAir; }
-    virtual public void throwBall(Vector2 vel) { rigid.velocity = vel * ballThrownSpeed; }
+   
     public PlayerScript getActivatePlayer() { return activatePlayer; }
     public GameObject getRecentlyThrownPlayer() { return recentlyThrownPlayer; }
     public float getStunMulit() { return stunMultiplier; }
+    public BallType getBallType() { return type; }
+
+    virtual public void throwBall(Vector2 vel, PlayerScript obj) {
+        hasBeenPickedUp = false;
+        isInAir = true;
+        rigid.velocity = vel * ballThrownSpeed;
+    }
 
     public void setSunMulti(int num)
     {
@@ -97,28 +104,31 @@ public class BallScript : StopableObject {
 
     protected void respawn()
     {
-        int rand = Random.Range(0, 2);
+        int rand = 0;
+        if(SideManagerScript.code != null)
+            rand = SideManagerScript.code.getSpawnSide();
+        float xPosRand = Random.Range(-4.0f, 4.0f);
         if (rigid != null)
             rigid.velocity = Vector2.zero;
 
         if (rand == 0)
         {
-            transform.position = new Vector3(transform.position.x, spawnPosition, 0);
+            transform.position = new Vector3(xPosRand, -spawnPosition, 0);
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, -spawnPosition, 0);
+            transform.position = new Vector3(xPosRand, spawnPosition, 0);
         }
 
         if(Mathf.Abs(transform.position.x) > 4)
         {
             if (rand == 0)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y -1, 0);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
+                transform.position = new Vector3(transform.position.x, transform.position.y - 1, 0);
             }
         }
 

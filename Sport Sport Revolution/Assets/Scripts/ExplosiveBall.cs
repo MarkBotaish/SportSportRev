@@ -6,16 +6,6 @@ public class ExplosiveBall : BallScript {
 
     PlayerScript hitPlayer;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    public override void Update()
-    {
-        base.Update();
-    }
-
     protected override void doAction()
     {
         base.doAction();
@@ -30,13 +20,13 @@ public class ExplosiveBall : BallScript {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player One" || collision.gameObject.tag == "Player Two")
             hitPlayer = collision.gameObject.GetComponent<PlayerScript>();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player One" || collision.gameObject.tag == "Player Two")
             hitPlayer = null;
     }
 

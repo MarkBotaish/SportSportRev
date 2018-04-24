@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour {
 
@@ -13,8 +12,8 @@ public class GameManagerScript : MonoBehaviour {
     public Text roundTextP2;
     public Text playerOneText;
     public Text playerTwoText;
-    public Text playerOneRound;
-    public Text playerTwoRound;
+    public Image playerOneRound;
+    public Image playerTwoRound;
 
     public GameObject panelOne;
     public GameObject panelTwo;
@@ -32,6 +31,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public List<StopableObject> objects;
     public List<AudioClip> roundSounds;
+    public List<Sprite> roundUI;
 
     List<BallScript> ballList;
 
@@ -40,6 +40,7 @@ public class GameManagerScript : MonoBehaviour {
     int roundsWonForOne = 0;
     int roundsWonForTwo = 0;
     float startingBall = 8.0f;
+   
 
     bool isEnding = false;
     bool changeScene = false;
@@ -167,8 +168,8 @@ public class GameManagerScript : MonoBehaviour {
 
     IEnumerator roundStart()
     {
-        playerOneRound.text = "Round " + round;
-        playerTwoRound.text = "Round " + round;
+        playerOneRound.sprite = roundUI[round - 1];
+        playerTwoRound.sprite = roundUI[round - 1];
 
         playerOneRound.gameObject.SetActive(true);
         playerTwoRound.gameObject.SetActive(true);
@@ -215,4 +216,6 @@ public class GameManagerScript : MonoBehaviour {
     }
 
     public float getBallLength() { return startingBall; }
+
+   
 }

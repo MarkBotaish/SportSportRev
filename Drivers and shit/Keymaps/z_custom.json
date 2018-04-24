@@ -1,0 +1,8 @@
+{
+  "Title": "New Keymap",
+  "All": {
+    "B": "vk_0",
+    "A": "vk_0",
+    "Home": "vk_0"
+  }
+}

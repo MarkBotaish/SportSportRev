@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 212903293417472414}
   - component: {fileID: 58329817048581658}
   - component: {fileID: 50565905580137372}
-  - component: {fileID: 58305314746416312}
   - component: {fileID: 114012989319106140}
   m_Layer: 8
   m_Name: ExplosiveBall
@@ -40,13 +39,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4621396053834590}
   - component: {fileID: 212706495799987422}
-  m_Layer: 8
+  - component: {fileID: 58136891609093974}
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4489325233493022
 Transform:
   m_ObjectHideFlags: 1
@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1009590841315676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4621396053834590}
@@ -94,12 +94,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &58305314746416312
+--- !u!58 &58136891609093974
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1009590841315676}
+  m_GameObject: {fileID: 1117074247396366}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -108,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 0.5
 --- !u!58 &58329817048581658
 CircleCollider2D:
   m_ObjectHideFlags: 1
