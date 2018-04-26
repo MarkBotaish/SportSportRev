@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballThrownSpeed: 15
   fallSpeed: 2
-  type: 1
+  type: 0
   bounceCount: 2
 --- !u!212 &212207528713675826
 SpriteRenderer:

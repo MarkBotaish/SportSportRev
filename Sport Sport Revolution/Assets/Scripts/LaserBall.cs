@@ -10,6 +10,7 @@ public class LaserBall : BallScript {
 
     public override void throwBall(Vector2 vel, PlayerScript obj)
     {
+        base.throwBall(vel,obj);
         hasBeenPickedUp = false;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<CircleCollider2D>().enabled = false;

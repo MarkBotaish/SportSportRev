@@ -75,12 +75,12 @@
   },
   "1": {
     "B": "add",
-    "A": "return",
     "Home": "multiply",
     "Left": "divide",
     "Right": "subtract",
     "Plus": "subtract",
     "Minus": "divide",
-    "Up": "multiply"
+    "Up": "multiply",
+    "A": "numpad0"
   }
 }

@@ -12,6 +12,10 @@ public class GameManagerScript : MonoBehaviour {
     public Text roundTextP2;
     public Text playerOneText;
     public Text playerTwoText;
+
+    public GameObject readyPlayerOneText;
+    public GameObject readyPlayerTwoText;
+
     public Image playerOneRound;
     public Image playerTwoRound;
 
@@ -28,6 +32,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject finalMessageP2;
 
     public int numberOfRoundsToWin;
+    public float timeToSpeedUp = 3;
 
     public List<StopableObject> objects;
     public List<AudioClip> roundSounds;
@@ -35,6 +40,8 @@ public class GameManagerScript : MonoBehaviour {
 
     List<BallScript> ballList;
 
+    float time = 0;
+    float speed = 0;
     int round = 0;
     int soundIndex = 0;
     int roundsWonForOne = 0;
@@ -44,6 +51,10 @@ public class GameManagerScript : MonoBehaviour {
 
     bool isEnding = false;
     bool changeScene = false;
+    bool shouldUpdateSpeed = false;
+    bool checkForStart = false;
+    bool playerOneReady = false;
+    bool playerTwoReady = false;
 
     AudioSource audio;
 
@@ -51,7 +62,7 @@ public class GameManagerScript : MonoBehaviour {
     bool isMoving = false;
     float timer = 0;
 
-
+    public float getSpeed() { return speed; }
     // Use this for initialization
     void Start () {
         code = this;
@@ -71,6 +82,12 @@ public class GameManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (checkForStart)
+        {
+            checkStart();
+            return;
+        }
         
         if (isEnding)
         {
@@ -85,7 +102,51 @@ public class GameManagerScript : MonoBehaviour {
         }  
         else
             checkAntiCamp();
-       
+
+        if(shouldUpdateSpeed)
+            updateTime();
+    }
+
+    void checkStart()
+    {
+        if (Input.GetKey(KeyCode.F))
+            playerOneReady = true;
+
+
+        if (Input.GetKey(KeyCode.Keypad0))
+            playerTwoReady = true;
+
+
+
+        if (playerTwoReady && playerOneReady)
+        {
+            for (int i = 0; i < objects.Count; i++)
+                objects[i].unfreeze();
+
+            playerOneRound.gameObject.SetActive(false);
+            playerTwoRound.gameObject.SetActive(false);
+            shouldUpdateSpeed = true;
+            time = 0;
+
+            checkForStart = false;
+            playerOneReady = false;
+            playerTwoReady = false;
+        }
+    }
+
+    void updateTime()
+    {
+        time += Time.deltaTime;
+        speed = Mathf.Pow((time / timeToSpeedUp), 3) + 0.2f;
+
+        if (time >= timeToSpeedUp)
+        {
+            shouldUpdateSpeed = false;
+            speed = 1.0f;
+        }
+        for (int i = 0; i < objects.Count; i++)
+            objects[i].setSpeedMultiplier(speed);
+            
     }
 
     void checkAntiCamp()
@@ -156,7 +217,7 @@ public class GameManagerScript : MonoBehaviour {
         {
             audio.clip = roundSounds[soundIndex++];
             audio.Play();
-            StartCoroutine(roundStart());
+            roundStart();
         }
         if (round > 1)
         {
@@ -166,7 +227,7 @@ public class GameManagerScript : MonoBehaviour {
        
     }
 
-    IEnumerator roundStart()
+    void roundStart()
     {
         playerOneRound.sprite = roundUI[round - 1];
         playerTwoRound.sprite = roundUI[round - 1];
@@ -174,12 +235,12 @@ public class GameManagerScript : MonoBehaviour {
         playerOneRound.gameObject.SetActive(true);
         playerTwoRound.gameObject.SetActive(true);
         timer = 0;
-        yield return new WaitForSeconds(audio.clip.length - 1);
-        for (int i = 0; i < objects.Count; i++)
-            objects[i].unfreeze();
 
-        playerOneRound.gameObject.SetActive(false);
-        playerTwoRound.gameObject.SetActive(false);
+        readyPlayerOneText.SetActive(true);
+        readyPlayerTwoText.SetActive(true);
+
+        checkForStart = true;
+
     }
 
     IEnumerator waitToChangeScreens()

@@ -5,7 +5,7 @@ public class PlayerScript : StopableObject {
 
     public enum BallType
     {
-        Base, Laser, Magic, Explosive
+        Laser, Magic, Explosive
     }
 
     [Header("General")]
@@ -18,6 +18,7 @@ public class PlayerScript : StopableObject {
     public float laserLength;
     public List<int> numberOfParticles;
     public Color tint;
+    public BallUIScript ballUI;
 
     bool hasPickedUp = false;
     bool isDead = false;
@@ -45,11 +46,13 @@ public class PlayerScript : StopableObject {
     ParticleSystem.EmissionModule emissionSystem;
     Animator anim;
 
-
     public void setManager(GameManagerScript manage) { code = manage; }
 
     void stopLoadingAnimation() {  anim.SetBool("Loading", false); }
-    void stopShootingAnimation() { anim.SetBool("Shooting", false); }
+    void stopShootingAnimation() {
+        anim.SetBool("Shooting", false);
+        stopLoadingAnimation();
+    }
 
     // Use this for initialization
     void Start() {
@@ -120,7 +123,7 @@ public class PlayerScript : StopableObject {
 
     void playerOneMovement()
     {
-        Vector2 vel = Vector2.up * pullSpeed;
+        Vector2 vel = Vector2.up * pullSpeed * speedMultiplier;
 
         if(!hasPickedUp)
             throwingAngle = Vector2.zero;
@@ -160,7 +163,7 @@ public class PlayerScript : StopableObject {
         if (!hasPickedUp)
             throwingAngle = Vector2.zero;
 
-        Vector2 vel = Vector2.down * pullSpeed;
+        Vector2 vel = Vector2.down * pullSpeed * speedMultiplier;
         if (Input.GetKey(KeyCode.Keypad8))
             vel += Vector2.down;
         if (Input.GetKey(KeyCode.Keypad5))
@@ -198,28 +201,33 @@ public class PlayerScript : StopableObject {
     {
         if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup)
         {
-             anim.SetBool("Loading", true);
-
+            anim.SetBool("Loading", true);
+            ball.GetComponent<SpriteRenderer>().enabled = false;    
             ball.GetComponent<BallScript>().playerRestart();
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             ball.GetComponent<BallScript>().setPickUp(true);
+
             hasPickedUp = true;
-            
+
+            ballUI.setImage((int)ball.GetComponent<BallScript>().getBallType());
+
             throwingAngle = new Vector2(0,1);
             pSystem.Play();
+
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         }
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
+            ballUI.setImage(-1);
             anim.SetBool("Shooting", true);
-
+            ball.GetComponent<SpriteRenderer>().enabled = true;
             BallScript ballScript = ball.GetComponent<BallScript>();
             pSystem.Stop();
             if (playerId == 1)
                 throwingAngle.y *= -1f;
 
-            if ((int)ballScript.getBallType() == 1)
+            if ((int)ballScript.getBallType() == 0)
             {
                 StartCoroutine(startLaser());
                 ball.GetComponent<LaserBall>().setLaserTime(laserLength);
@@ -310,7 +318,6 @@ public class PlayerScript : StopableObject {
         
         isDead = true;
         gameObject.GetComponent<SpriteRenderer>().color = tint;
-        print("DEAD");
       
         StartCoroutine(freeze());
     }
@@ -372,7 +379,7 @@ public class PlayerScript : StopableObject {
 
     public bool getAction()
     {
-        if ((playerId == 0 && Input.GetKey(KeyCode.F)) || (playerId == 1 && Input.GetKey(KeyCode.KeypadEnter)))
+        if ((playerId == 0 && Input.GetKey(KeyCode.F)) || (playerId == 1 && Input.GetKey(KeyCode.Keypad0)))
             return true;
         return false;
     }

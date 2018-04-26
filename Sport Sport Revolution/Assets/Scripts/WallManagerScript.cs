@@ -17,6 +17,8 @@ public class WallManagerScript : MonoBehaviour {
     Vector3 wallP1Position;
     Vector3 wallP2Position;
 
+    float startingY;
+
 
     public float delay;
     int index = -1;
@@ -26,6 +28,7 @@ public class WallManagerScript : MonoBehaviour {
 	void Start () {
         wallP1Position = middleWallP1.transform.position;
         wallP2Position = middleWallP2.transform.position;
+        startingY = middleWallP2.transform.position.y;
         code = this;
     }
 
@@ -44,7 +47,7 @@ public class WallManagerScript : MonoBehaviour {
             updatingWalls[index].transform.position += new Vector3(0.05f, 0, 0);
             return true;
         }
-        else if(middleWallP1.transform.position.y <= -10.25 + ((yPositionIndex) * 1.5f))
+        else if(middleWallP1.transform.position.y <= -startingY + ((yPositionIndex) * 1.5f))
         {
             middleWallP1.transform.position += new Vector3(0.0f, 0.05f, 0.0f);
             middleWallP2.transform.position -= new Vector3(0.0f, 0.05f, 0.0f);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BallType
 {
-    Base, Laser, Magic, Explosive
+    Laser, Magic, Explosive
 }
 
 
@@ -45,6 +45,8 @@ public class BallScript : StopableObject {
         hasBeenPickedUp = false;
         isInAir = true;
         rigid.velocity = vel * ballThrownSpeed;
+        activatePlayer = obj;
+        recentlyThrownPlayer = obj.gameObject;
     }
 
     public void setSunMulti(int num)
@@ -90,19 +92,19 @@ public class BallScript : StopableObject {
         if (Mathf.Abs(transform.position.y) < 0.5 && !isInAir && !hasBeenPickedUp)
             respawn();
 
-        if (Mathf.Abs(rigid.velocity.y) < fallSpeed && !isInAir && !hasBeenPickedUp)
+        if (Mathf.Abs(rigid.velocity.y) < fallSpeed* speedMultiplier && !isInAir && !hasBeenPickedUp)
         {
             if (transform.position.y > 0)
-                rigid.velocity = new Vector2(rigid.velocity.x, -fallSpeed);
+                rigid.velocity = new Vector2(rigid.velocity.x, -fallSpeed * speedMultiplier);
             else
-                rigid.velocity = new Vector2(rigid.velocity.x, fallSpeed);
+                rigid.velocity = new Vector2(rigid.velocity.x, fallSpeed * speedMultiplier);
         }
 
         if (activatePlayer != null && activatePlayer.getAction())
             doAction();
     }
 
-    protected void respawn()
+    protected virtual void respawn()
     {
         int rand = 0;
         if(SideManagerScript.code != null)
