@@ -1,50 +1,14 @@
-2018/04/09 00:35:36.290 Info   Starting JoyToKey Ver5.9
-2018/04/09 00:35:36.290 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
-2018/04/09 00:35:36.290 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
-2018/04/09 00:35:36.290 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
-2018/04/09 00:35:36.290 Info   Windows Version = 6.2
-2018/04/09 00:35:36.291 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
-2018/04/09 00:35:36.291 Info   LicenseKey "" is not valid
-2018/04/09 00:35:36.323 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/04/09 00:35:36.324 Info   Initialized XInput (Joystick.cpp#146)
-2018/04/09 00:35:36.338 Info   Detected a XI joystick: XInput-0
-2018/04/09 00:35:36.338 Info   Preferred index = -1
-2018/04/09 00:35:36.338 Info   Detected a XI joystick: XInput-1
-2018/04/09 00:35:36.338 Info   Preferred index = -1
-2018/04/09 00:35:36.339 Info   DetectJoysticks: Detected 2 XI joystick(s)
-2018/04/09 00:35:36.549 Info   Detected a DI joystick: {3F091CF0-3450-11E8-8001-444553540000}, USB Gamepad , USB Gamepad 
-2018/04/09 00:35:36.549 Info   Preferred index = 2
-2018/04/09 00:35:36.549 Info   numAxis = 6
-2018/04/09 00:35:36.549 Info   numPOVs = 0
-2018/04/09 00:35:36.549 Info   numButtons = 10
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=0 type=102 name=Y Axis
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=4 type=2 name=X Axis
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=8 type=602 name=X Axis
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=12 type=702 name=X Axis
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=16 type=802 name=X Axis
-2018/04/09 00:35:36.549 Info   EnumDeviceObject: Axis offset=20 type=902 name=Axis 9
-2018/04/09 00:35:36.554 Info   Detected a DI joystick: {C1A83EB0-3B63-11E8-8007-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
-2018/04/09 00:35:36.554 Info   It is an XInput device, so skipping...
-2018/04/09 00:35:36.555 Info   Detected a DI joystick: {A3C07E70-3B64-11E8-8008-444553540000}, Controller (XBOX 360 For Windows), Controller (XBOX 360 For Windows)
-2018/04/09 00:35:36.555 Info   It is an XInput device, so skipping...
-2018/04/09 00:35:36.555 Info   Detected a DI joystick: {4783F580-39BE-11E8-8002-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
-2018/04/09 00:35:36.555 Info   Preferred index = 0
-2018/04/09 00:35:36.556 Info   numAxis = 0
-2018/04/09 00:35:36.556 Info   numPOVs = 0
-2018/04/09 00:35:36.556 Info   numButtons = 0
-2018/04/09 00:35:36.556 Info   Detected a DI joystick: {C2434C80-39BE-11E8-8003-444553540000}, Nintendo RVL-CNT-01, Nintendo RVL-CNT-01
-2018/04/09 00:35:36.556 Info   Preferred index = 1
-2018/04/09 00:35:36.556 Info   numAxis = 0
-2018/04/09 00:35:36.556 Info   numPOVs = 0
-2018/04/09 00:35:36.556 Info   numButtons = 0
-2018/04/09 00:35:36.556 Info   DetectJoysticks: Detected 3 DI joystick(s)
-2018/04/09 00:35:36.558 Info   Joystick #3: USB Gamepad
-2018/04/09 00:35:36.559 Info   Joystick #1: Nintendo RVL-CNT-01
-2018/04/09 00:35:36.559 Info   Joystick #2: Nintendo RVL-CNT-01
-2018/04/09 00:35:36.559 Info   Joystick #4: XInput Device #1
-2018/04/09 00:35:36.559 Info   Joystick #5: XInput Device #2
-2018/04/09 00:35:36.559 Info   5 joysticks are detected (Joystick.cpp#168)
-2018/04/09 00:35:36.559 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
-2018/04/09 00:35:36.561 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
-2018/04/09 00:35:36.582 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
-2018/04/09 00:36:53.022 Info   Application terminated (Utils\LogFile.cpp#20)
+2018/04/27 02:42:05.145 Info   Starting JoyToKey Ver5.9
+2018/04/27 02:42:05.145 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
+2018/04/27 02:42:05.145 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
+2018/04/27 02:42:05.145 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
+2018/04/27 02:42:05.145 Info   Windows Version = 6.2
+2018/04/27 02:42:05.146 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
+2018/04/27 02:42:05.150 Info   LicenseKey "" is not valid
+2018/04/27 02:42:05.181 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/04/27 02:42:05.183 Info   Initialized XInput (Joystick.cpp#146)
+2018/04/27 02:42:05.248 Info   0 joysticks are detected (Joystick.cpp#168)
+2018/04/27 02:42:05.248 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/04/27 02:42:05.250 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/04/27 02:42:05.278 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/04/27 02:42:13.621 Info   Application terminated (Utils\LogFile.cpp#20)

@@ -15,6 +15,9 @@ public class BallUIScript : MonoBehaviour {
 	
 	public void setImage(int index)
     {
+        if (image == null)
+            return;
+
         if (index < 0 || index >= balls.Count)
         {
             image.sprite = null;

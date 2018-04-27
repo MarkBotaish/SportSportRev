@@ -151,7 +151,7 @@ public class PlayerScript : StopableObject {
         if (Input.GetKeyDown(KeyCode.Alpha1))
             throwingAngle = new Vector2(Mathf.Cos((180-throwAngle) * (Mathf.PI / 180)), Mathf.Sin((180 - throwAngle) * (Mathf.PI / 180)));
 
-        if(hasPickedUp || throwingAngle == Vector2.zero)
+        if ((hasPickedUp || throwingAngle == Vector2.zero) && (ball != null && (int)ball.GetComponent<BallScript>().getBallType() != 0))
             gameObject.transform.localRotation = (Quaternion.Euler(0, 0, throwAngle * -throwingAngle.x));
 
         rigid.velocity = vel * speed;
@@ -187,7 +187,7 @@ public class PlayerScript : StopableObject {
         if (Input.GetKeyDown(KeyCode.KeypadMultiply))
             throwingAngle = Vector2.zero;
 
-        if ((hasPickedUp || throwingAngle == Vector2.zero) && (ball != null && (int)ball.GetComponent<BallScript>().getBallType() != 1))
+        if ((hasPickedUp || throwingAngle == Vector2.zero) && (ball != null && (int)ball.GetComponent<BallScript>().getBallType() != 0))
             gameObject.transform.localRotation = (Quaternion.Euler(0, 0, throwAngle * throwingAngle.x));
 
         rigid.velocity = vel * speed;
@@ -291,7 +291,7 @@ public class PlayerScript : StopableObject {
     {
         if (collision.transform.tag == "Ball" && collision.gameObject.GetComponent<BallScript>().getIsInAir())
         {
-            if(collision.gameObject.GetComponent<BallScript>().getRecentlyThrownPlayer() != gameObject)
+            if(collision.gameObject.GetComponent<BallScript>().getRecentlyThrownPlayer() != gameObject && !isForzen)
                 hit(collision.gameObject);
         }
 
@@ -355,16 +355,24 @@ public class PlayerScript : StopableObject {
         base.restart();
         if (isInitted)
         {
+            ballUI.setImage(-1);
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
             rigid.velocity = Vector3.zero;
             gameObject.transform.position = startingPos;
             throwingAngle = Vector2.zero;
             pSystem.Stop();
-
+            ball = null;
             stopLoadingAnimation();
             stopShootingAnimation();
-            
+            anim.SetBool("Reset", true);
+            hasPickedUp = false;
         }
+    }
+
+    public override void unfreeze()
+    {
+        base.unfreeze();
+        anim.SetBool("Reset", false);
     }
     public override void togglePause()
     {

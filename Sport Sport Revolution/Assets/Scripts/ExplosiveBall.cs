@@ -53,4 +53,11 @@ public class ExplosiveBall : BallScript {
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         base.respawn();
     }
+
+    public override void restart()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        base.restart();
+    }
 }

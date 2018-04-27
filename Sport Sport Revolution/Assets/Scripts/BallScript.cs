@@ -158,6 +158,7 @@ public class BallScript : StopableObject {
         hasBeenPickedUp = false;
         respawn();
         spawnPosition = startingSpawnPosition;
+        
         if (isInitted)
             playerRestart();
 

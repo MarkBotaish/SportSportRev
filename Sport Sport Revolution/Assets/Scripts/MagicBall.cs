@@ -30,6 +30,7 @@ public class MagicBall : BallScript {
         base.restart();
         if (isInitted)
         {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale;
         }
@@ -39,6 +40,14 @@ public class MagicBall : BallScript {
     {
         rigid.velocity = Vector2.zero;
         transform.localScale = originalScale;
+    }
+
+    protected override void checkThrownBall()
+    {
+        base.checkThrownBall();
+
+        if(!isInAir)
+            transform.localScale = originalScale;
     }
 
 }
