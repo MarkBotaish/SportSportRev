@@ -1,14 +1,16 @@
-2018/04/27 02:42:05.145 Info   Starting JoyToKey Ver5.9
-2018/04/27 02:42:05.145 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
-2018/04/27 02:42:05.145 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
-2018/04/27 02:42:05.145 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
-2018/04/27 02:42:05.145 Info   Windows Version = 6.2
-2018/04/27 02:42:05.146 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
-2018/04/27 02:42:05.150 Info   LicenseKey "" is not valid
-2018/04/27 02:42:05.181 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/04/27 02:42:05.183 Info   Initialized XInput (Joystick.cpp#146)
-2018/04/27 02:42:05.248 Info   0 joysticks are detected (Joystick.cpp#168)
-2018/04/27 02:42:05.248 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
-2018/04/27 02:42:05.250 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
-2018/04/27 02:42:05.278 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
-2018/04/27 02:42:13.621 Info   Application terminated (Utils\LogFile.cpp#20)
+2018/04/28 16:18:36.240 Info   Starting JoyToKey Ver5.9
+2018/04/28 16:18:36.240 Info   ExeFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.exe
+2018/04/28 16:18:36.240 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\
+2018/04/28 16:18:36.240 Info   IniFile=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\JoyToKey.ini
+2018/04/28 16:18:36.240 Info   Windows Version = 6.2
+2018/04/28 16:18:36.260 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#226)
+2018/04/28 16:18:36.264 Info   LicenseKey "" is not valid
+2018/04/28 16:18:36.565 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/04/28 16:18:36.603 Info   Initialized XInput (Joystick.cpp#146)
+2018/04/28 16:18:36.699 Info   0 joysticks are detected (Joystick.cpp#168)
+2018/04/28 16:18:36.699 Info   ConfigDir=C:\Users\Mark\Desktop\GitHub\SportSportRev\Drivers and shit\JoyToKey_en\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/04/28 16:18:36.704 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/04/28 16:18:36.753 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/04/28 16:18:54.818 Error  Access is denied.
+ (Utils\Utils.cpp#473)
+2018/04/28 16:25:12.613 Info   Application terminated (Utils\LogFile.cpp#20)

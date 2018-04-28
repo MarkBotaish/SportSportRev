@@ -1,10 +1,29 @@
 Need to install TouchMote: http://touchmote.net/
 Make sure its the 64-bit system (middle)
 
-Controller one:
-A -> R
-B -> F
+Its gonna say can't install, but hit more info and a button to install anyway should pop up. 
+2-3 windows want to install drivers should pop up. click install on all of them. 
+DONT RESET YET
+In the "Drivers and shit" folder there is a folder called "Keymaps." You need to replace the touchmote Keymaps with this folder. 
+Go to C:\Program Files\Touchmote and it should be in there. 
 
-Controller Two 
-A -> +
-B -> -
+
+Put in the install disk for the bluetooth (in the black folder). 
+Nothing will pop up, so you have to go into File explorer and open the disk that way.
+Inside the disk there should be a FOLDER called AutoRun. In that folder, there is a .exe called Auto run. Run that. 
+A window should pop up and a picture of the bluetooth device should appear Click that. 
+Three options should be shown. You only need to install the first two. Click on the Wifi driver (it will take 9 years for something to happen.)
+If some chinese looking shit pops up click the left most option. The way you can tell if the driver you clicked works is if a window pops up
+asking for permission to run the program. DO NOT RESET WHEN DONE. Once that is installed, install the bluetooth driver. Now reset. 
+
+To connect the Wiimotes just follow the instructions when you open touchmote. Make sure the bluetooth device is in a 3.0 port (blue). 
+
+To connect the pads just plug them in. 
+Under "Drivers and shit" there should be a folder called "JotToKey_en." Follow the folders untill you get to a .exe application. Run that as 
+an admin. Under "Profile 1" there should be a header called Options. Click that and refresh the joysticks. (I think 6 should be active depending on 
+if you connected the Wiimotes or not.) When you press the pads now Joystick 3 and Joystick 4 should highlight. If not then you need to change the pads. 
+Go to settings->Configure Joysticks->Advnaces setting for each device. Under the "Please select a device" (drop down menu), click on the Gamepad and under
+"Specify a preferred joystick number when this device is connected" change it to the respective joystick. 
+
+Everything should work right. To test open a text editor and start clicking buttons. If the buttons are near WASD that is player one. If there are near
+the numpad that is player two. 
