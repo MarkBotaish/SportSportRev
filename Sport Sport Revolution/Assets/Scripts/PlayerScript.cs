@@ -35,6 +35,7 @@ public class PlayerScript : StopableObject {
     private Vector2 throwingAngle = Vector2.up;
     private Color startingColor;
     private Vector3 startingPos;
+    private GameObject laserHead;
     int particleIndex = 0;
 
    
@@ -64,11 +65,17 @@ public class PlayerScript : StopableObject {
         emissionSystem = pSystem.emission;
         startingFreezeTime = freezeTime;
         anim = gameObject.GetComponent<Animator>();
+        laserHead = gameObject.transform.GetChild(2).gameObject;
 
     }
 
     // Update is called once per frame
-    void Update() { 
+    void Update() {
+
+
+        if (hasPickedUp && ball != null)
+            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
+
         if (isForzen || isPaused)
             return;
 
@@ -90,6 +97,9 @@ public class PlayerScript : StopableObject {
                 code.secondPlayerWon();
         }
 
+        if (ball == null)
+            hasPickedUp = false;
+
         if (hasPickedUp)
             emissionSystem.rateOverTime = numberOfParticles[getParticleNumber()];
 
@@ -98,7 +108,7 @@ public class PlayerScript : StopableObject {
 
     void getLaserTarget()
     {
-        if (useLaser) 
+        if (useLaser)
             laser();
     }
 
@@ -118,6 +128,13 @@ public class PlayerScript : StopableObject {
 
         lineRenderer.SetPosition(0, lineRenderer.gameObject.transform.position);
         lineRenderer.SetPosition(1, hit.point);
+
+        if(playerId == 0)
+            laserHead.transform.position = (hit.point - new Vector2(0,0.4f));
+        else
+            laserHead.transform.position = (hit.point - new Vector2(0, -0.4f));
+ 
+        laserHead.transform.rotation = Quaternion.Euler(0f, 0f, 180f * -playerId) ;
     }
 
 
@@ -232,24 +249,15 @@ public class PlayerScript : StopableObject {
                 StartCoroutine(startLaser());
                 ball.GetComponent<LaserBall>().setLaserTime(laserLength);
             }
-            else
-            {
-               
-                ball.layer = 13;
-            }
-
+ 
+            ball.layer = 13;
             ballScript.setSunMulti(particleIndex);
             ballScript.throwBall(throwingAngle, this);
             ball = null;
+            hasPickedUp = false;
             
         }
 
-        //Might need to change
-        if (ball == null)
-            hasPickedUp = false;
-
-        if (hasPickedUp)
-            ball.transform.position = gameObject.transform.GetChild(0).transform.position;
 
     }
 
@@ -280,10 +288,6 @@ public class PlayerScript : StopableObject {
     private void OnTriggerExit2D(Collider2D collision)
     { 
 
-        if (collision.transform.tag == "Ball" && ball == collision.gameObject)
-        {
-            ball = null;
-        }
 
     }
 
@@ -343,11 +347,13 @@ public class PlayerScript : StopableObject {
 
     IEnumerator startLaser()
     {
+        laserHead.SetActive(true);
         useLaser = true;
         yield return new WaitForSeconds(laserLength);
         lineRenderer.SetPosition(0, Vector2.zero);
         lineRenderer.SetPosition(1, Vector2.zero);
         useLaser = false;
+        laserHead.SetActive(false);
     }
 
     public override void restart()

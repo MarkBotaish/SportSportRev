@@ -13,7 +13,6 @@ public class BallScript : StopableObject {
     public float ballThrownSpeed;
     public float fallSpeed;
     protected float spawnPosition;
-    Color startingColor;
     public BallType type;
     protected bool isInitted = false;
     protected float stunMultiplier = 1.0f;
@@ -77,7 +76,6 @@ public class BallScript : StopableObject {
         startingSpawnPosition = spawnPosition;
         startingBounceCount = bounceCount;
         rigid = gameObject.GetComponent<Rigidbody2D>();
-        startingColor = gameObject.GetComponent<SpriteRenderer>().color;
         isInitted = true;
     }
 
@@ -145,11 +143,6 @@ public class BallScript : StopableObject {
         {
             rigid.velocity = Vector2.zero;
         }
-
-        if (isInAir)
-            gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-        else
-            gameObject.GetComponent<SpriteRenderer>().color = startingColor;
     }
 
     override public void restart() {
@@ -158,7 +151,7 @@ public class BallScript : StopableObject {
         hasBeenPickedUp = false;
         respawn();
         spawnPosition = startingSpawnPosition;
-        
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
         if (isInitted)
             playerRestart();
 
@@ -192,13 +185,14 @@ public class BallScript : StopableObject {
     {
         if ((collision.transform.tag == "Wall" || collision.transform.tag == "Ball" || collision.transform.tag == "BackWall") && activatePlayer != collision.gameObject && isInAir)
         {
-            if(recentlyThrownPlayer != null)
+            bounceCount--;
+            if (bounceCount <= 1 && recentlyThrownPlayer != null)
                 recentlyThrownPlayer = null;
 
             if (!isInAir)
                 return;
 
-            bounceCount--;
+            
             if (bounceCount <= 0)
             {
                 activatePlayer = null;

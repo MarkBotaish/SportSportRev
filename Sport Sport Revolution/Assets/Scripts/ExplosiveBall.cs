@@ -14,18 +14,7 @@ public class ExplosiveBall : BallScript {
         GameObject rocket = Instantiate(rocketPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         rocket.GetComponent<BallScript>().throwBall(vel, obj);
         rocket.GetComponent<RocketScript>().setExplosive(this);
-    }
-
-    protected override void doAction()
-    {
-        base.doAction();
-        isInAir = false;
-        recentlyThrownPlayer = null;
-        activatePlayer = null;
-        if (hitPlayer != null)
-            hitPlayer.hit(gameObject);
-        StartCoroutine(childEnable());
-
+        hasBeenPickedUp = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

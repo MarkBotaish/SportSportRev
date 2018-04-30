@@ -8,10 +8,19 @@ public class GameManagerScript : MonoBehaviour {
 
     public static GameManagerScript code;
 
-    public Text roundTextP1;
-    public Text roundTextP2;
-    public Text playerOneText;
-    public Text playerTwoText;
+    [Header("UI Player One")]
+    public GameObject blueCatUI_1;
+    public GameObject orangeCatUI_1;
+  
+
+    [Header("UI Player Two")]
+    public GameObject blueCatUI_2;
+    public GameObject orangeCatUI_2;
+
+
+    [Header("General")]
+    public Sprite redFill;
+    public Sprite blueFill;
 
     public GameObject readyPlayerOneText;
     public GameObject readyPlayerTwoText;
@@ -125,6 +134,13 @@ public class GameManagerScript : MonoBehaviour {
 
             playerOneRound.gameObject.SetActive(false);
             playerTwoRound.gameObject.SetActive(false);
+
+            orangeCatUI_1.SetActive(false);
+            orangeCatUI_2.SetActive(false);
+
+            blueCatUI_1.SetActive(false);
+            blueCatUI_2.SetActive(false);
+
             shouldUpdateSpeed = true;
             time = 0;
 
@@ -177,8 +193,13 @@ public class GameManagerScript : MonoBehaviour {
     public void firstPlayerWon()
     {
         roundsWonForOne++;
-        playerOneText.text = "Won: " + roundsWonForOne + "/" + round;
-        playerTwoText.text = "Won: " + roundsWonForTwo + "/" + round;
+
+        orangeCatUI_1.transform.GetChild(roundsWonForOne - 1).GetComponent<Image>().sprite = redFill;
+        orangeCatUI_2.transform.GetChild(roundsWonForOne - 1).GetComponent<Image>().sprite = redFill;
+
+        playerOneRound.GetComponent<Image>().color = Color.red;
+        playerTwoRound.GetComponent<Image>().color = Color.red;
+
         updateRound();
         
     }
@@ -186,17 +207,19 @@ public class GameManagerScript : MonoBehaviour {
     public void secondPlayerWon()
     {
         roundsWonForTwo++;
-        playerTwoText.text = "Won: " + roundsWonForTwo + "/" + round;
-        playerOneText.text = "Won: " + roundsWonForOne + "/" + round;
+
+        blueCatUI_1.transform.GetChild(roundsWonForTwo - 1).GetComponent<Image>().sprite = blueFill;
+        blueCatUI_2.transform.GetChild(roundsWonForTwo - 1).GetComponent<Image>().sprite = blueFill;
+
+        playerOneRound.GetComponent<Image>().color = Color.blue;
+        playerTwoRound.GetComponent<Image>().color = Color.blue;
+
         updateRound();
     }
     void updateRound()
     {
         round++;
-        roundTextP1.text = "Round #: " + round;
-        roundTextP2.text = "Round #: " + round;
 
-      
         for (int i = 0; i < objects.Count; i++)
             objects[i].restart();
 
@@ -234,6 +257,13 @@ public class GameManagerScript : MonoBehaviour {
 
         playerOneRound.gameObject.SetActive(true);
         playerTwoRound.gameObject.SetActive(true);
+
+        orangeCatUI_1.SetActive(true);
+        orangeCatUI_2.SetActive(true);
+
+        blueCatUI_1.SetActive(true);
+        blueCatUI_2.SetActive(true);
+
         timer = 0;
 
         readyPlayerOneText.SetActive(true);
