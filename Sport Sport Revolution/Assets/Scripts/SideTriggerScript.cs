@@ -22,10 +22,12 @@ public class SideTriggerScript : MonoBehaviour {
 
         if(collision.tag == "Ball")
         {
+            /*
             if (side == 0)
                 parent.changeTopCount(1);
             else
                 parent.changeBottomCount(1);
+                */
         }
        
     }
@@ -34,10 +36,12 @@ public class SideTriggerScript : MonoBehaviour {
     {
         if (collision.tag == "Ball")
         {
+            /*
             if (side == 0)
                 parent.changeTopCount(-1);
             else
                 parent.changeBottomCount(-1);
+                */
         }
            
     }

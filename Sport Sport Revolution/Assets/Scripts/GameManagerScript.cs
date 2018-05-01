@@ -44,8 +44,8 @@ public class GameManagerScript : MonoBehaviour {
     public float timeToSpeedUp = 3;
 
     public List<StopableObject> objects;
-    public List<AudioClip> roundSounds;
     public List<Sprite> roundUI;
+
 
     List<BallScript> ballList;
 
@@ -65,8 +65,6 @@ public class GameManagerScript : MonoBehaviour {
     bool playerOneReady = false;
     bool playerTwoReady = false;
 
-    AudioSource audio;
-
     public float AntiCampDelay;
     bool isMoving = false;
     float timer = 0;
@@ -75,7 +73,6 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         code = this;
-        audio = GetComponent<AudioSource>();
         ballList = new List<BallScript>();
         for (int i = 0; i < objects.Count; i++)
             if (objects[i].gameObject.tag == "Ball")
@@ -238,8 +235,6 @@ public class GameManagerScript : MonoBehaviour {
         }
         else
         {
-            audio.clip = roundSounds[soundIndex++];
-            audio.Play();
             roundStart();
         }
         if (round > 1)

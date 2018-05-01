@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StopableObject : MonoBehaviour
 {
-    protected bool isForzen = false;
+    protected bool isForzen = true;
     protected bool isPaused = false;
     protected float speedMultiplier;
 

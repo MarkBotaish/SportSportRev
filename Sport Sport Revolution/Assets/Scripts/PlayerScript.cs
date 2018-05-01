@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerScript : StopableObject {
 
-    public enum BallType
-    {
-        Laser, Magic, Explosive
-    }
-
     [Header("General")]
 
     public int playerId;
@@ -19,12 +14,14 @@ public class PlayerScript : StopableObject {
     public List<int> numberOfParticles;
     public Color tint;
     public BallUIScript ballUI;
+    public List<AudioClip> sounds;
 
     bool hasPickedUp = false;
     bool isDead = false;
     bool isStunned = false;
     bool isInitted = false;
     bool canPickup = true;
+    bool isAnimating = false;
 
     [Header("Laser")]
     public bool useLaser = false;
@@ -36,6 +33,9 @@ public class PlayerScript : StopableObject {
     private Color startingColor;
     private Vector3 startingPos;
     private GameObject laserHead;
+    private ParticleSystem parentPSystem;
+    private int lastThrownBall;
+    private AudioSource audio;
     int particleIndex = 0;
 
    
@@ -53,6 +53,7 @@ public class PlayerScript : StopableObject {
     void stopShootingAnimation() {
         anim.SetBool("Shooting", false);
         stopLoadingAnimation();
+        isAnimating = false;
     }
 
     // Use this for initialization
@@ -62,10 +63,12 @@ public class PlayerScript : StopableObject {
         startingColor = gameObject.GetComponent<SpriteRenderer>().color;
         isInitted = true;
         pSystem = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
+        parentPSystem = gameObject.GetComponent<ParticleSystem>();
         emissionSystem = pSystem.emission;
         startingFreezeTime = freezeTime;
         anim = gameObject.GetComponent<Animator>();
         laserHead = gameObject.transform.GetChild(2).gameObject;
+        audio = gameObject.GetComponent<AudioSource>();
 
     }
 
@@ -216,7 +219,7 @@ public class PlayerScript : StopableObject {
 
     void pickup(KeyCode key, float y)
     {
-        if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup)
+        if (ball != null && !hasPickedUp && !ball.GetComponent<BallScript>().getIsInAir() && !isDead && canPickup && !isAnimating)
         {
             anim.SetBool("Loading", true);
             ball.GetComponent<SpriteRenderer>().enabled = false;    
@@ -237,7 +240,7 @@ public class PlayerScript : StopableObject {
         else if ((Input.GetKeyDown(key)) && hasPickedUp)
         {
             ballUI.setImage(-1);
-            anim.SetBool("Shooting", true);
+           
             ball.GetComponent<SpriteRenderer>().enabled = true;
             BallScript ballScript = ball.GetComponent<BallScript>();
             pSystem.Stop();
@@ -249,8 +252,17 @@ public class PlayerScript : StopableObject {
                 StartCoroutine(startLaser());
                 ball.GetComponent<LaserBall>().setLaserTime(laserLength);
             }
- 
-            ball.layer = 13;
+            else
+            {
+                anim.SetBool("Shooting", true);
+                isAnimating = true;
+                ball.layer = 13;
+            }
+            lastThrownBall = (int)ballScript.getBallType();
+
+            audio.clip = sounds[(int)ballScript.getBallType()];
+            audio.Play();
+            
             ballScript.setSunMulti(particleIndex);
             ballScript.throwBall(throwingAngle, this);
             ball = null;
@@ -337,8 +349,10 @@ public class PlayerScript : StopableObject {
                 rigid.velocity = Vector2.down * pullSpeed;
 
             isStunned = true;
+            parentPSystem.Play();
             yield return new WaitForSeconds(freezeTime);
             freezeTime = startingFreezeTime;
+            parentPSystem.Stop();
             isStunned = false;
             isDead = false;
             gameObject.GetComponent<SpriteRenderer>().color = startingColor;
@@ -349,11 +363,14 @@ public class PlayerScript : StopableObject {
     {
         laserHead.SetActive(true);
         useLaser = true;
+        isAnimating = true;
         yield return new WaitForSeconds(laserLength);
         lineRenderer.SetPosition(0, Vector2.zero);
         lineRenderer.SetPosition(1, Vector2.zero);
         useLaser = false;
         laserHead.SetActive(false);
+        lastThrownBall = -1;
+        anim.SetBool("Shooting", true);
     }
 
     public override void restart()

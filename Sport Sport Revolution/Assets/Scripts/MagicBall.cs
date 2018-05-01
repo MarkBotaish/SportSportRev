@@ -26,8 +26,6 @@ public class MagicBall : BallScript {
 
         gameObject.GetComponent<TrailRenderer>().enabled = true;
         gameObject.GetComponent<TrailRenderer>().startWidth = transform.localScale.x / 2;
-        gameObject.GetComponent<TrailRenderer>().time *= (ballThrownSpeed / rigid.velocity.y);
-
 
     }
 

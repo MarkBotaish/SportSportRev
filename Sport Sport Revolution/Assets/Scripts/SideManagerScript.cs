@@ -21,19 +21,25 @@ public class SideManagerScript : MonoBehaviour {
     }
     public int getSpawnSide()
     {
-        int rand = Random.Range(0, 2);
 
-        if (numOfBallsOnP1 > numOfBallsOnP2)
+        int rand = -1;
+
+        if (numOfBallsOnP1 >= numOfBallsOnP2)
         {
             rand = 1;
+            if(numOfBallsOnP1 > 0)
+                numOfBallsOnP1--;
+            numOfBallsOnP2++;
+
         }
         else if (numOfBallsOnP1 < numOfBallsOnP2)
         {
             rand = 0;
+            if (numOfBallsOnP2 > 0)
+                numOfBallsOnP2--;
+            numOfBallsOnP1++;
         }
+
         return rand;
     }
-
-    public void changeTopCount(int num) { numOfBallsOnP1+= num; }
-    public void changeBottomCount(int num) { numOfBallsOnP2 += num; }
 }

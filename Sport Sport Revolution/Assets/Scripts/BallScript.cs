@@ -104,8 +104,8 @@ public class BallScript : StopableObject {
 
     protected virtual void respawn()
     {
-        int rand = 0;
-        if(SideManagerScript.code != null)
+        int rand = Random.Range(0, 2);
+        if (SideManagerScript.code != null)
             rand = SideManagerScript.code.getSpawnSide();
         float xPosRand = Random.Range(-4.0f, 4.0f);
         if (rigid != null)
